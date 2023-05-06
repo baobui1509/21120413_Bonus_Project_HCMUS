@@ -305,3 +305,33 @@ void Change_Password(User &user, int role, int index)
     fout.close();
     cout << "Change Successfully!" << endl;
 }
+
+void Create_SchoolYear(SchoolYear &schoolyear)
+{
+    cout << "Enter start year: ";
+    cin >> schoolyear.StartYear;
+    while (schoolyear.StartYear <= 0)
+    {
+        cout << "Please enter an integer number bigger than 0: ";
+        cin >> schoolyear.StartYear;
+    }
+    schoolyear.EndYear = schoolyear.StartYear + 1;
+}
+
+void Create_Classes(SchoolYear &sy)
+{
+    cout << "Enter the number of class: ";
+    cin >> sy.nClass;
+    while (sy.nClass <= 0)
+    {
+        cout << "Please enter an integer number bigger than 0: ";
+        cin >> sy.nClass;
+    }
+    sy.ClassList = new Class[sy.nClass];
+    cin.ignore();
+    for (int i = 0; i < sy.nClass; i++)
+    {
+        cout << "Enter the name of class: ";
+        getline(cin, sy.ClassList[i].ClassName);
+    }
+}

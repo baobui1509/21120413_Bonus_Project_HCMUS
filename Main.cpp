@@ -42,7 +42,81 @@ int main()
                 {
                 case 1:
                 {
-                    cout << "______Funtions______" << endl;
+                    cout << "____________________________________Funtions________________________________________" << endl;
+                    if (role == 1)
+                    {
+                        SchoolYear *schoolyear;
+                        int nSY = 0;
+                        bool tieptuc3 = true;
+                        bool haha = false;
+                        int choice3 = 0;
+                        while (tieptuc3)
+                        {
+                            cout << "1. Create a school year" << endl
+                                 << "2. Create several classes for 1st-year students" << endl
+                                 << "3. Add new 1st year students to 1st-year classes" << endl
+                                 << "4. Create a semester" << endl
+                                 << "5. Add a course to this semester (A course will be taught in only one session in a week)" << endl
+                                 << "6. Upload a CSV file, containing a list of students enrolled in the course" << endl
+                                 << "7. View the list of courses" << endl
+                                 << "8. Update course information" << endl
+                                 << "10. Add a student to the course" << endl
+                                 << "11. Remove a student from the course" << endl
+                                 << "12. Delete a course" << endl
+                                 << "13. View a list of classes" << endl
+                                 << "14. View a list of students in a class" << endl
+                                 << "15. View a list of students in a course" << endl
+                                 << "16. Export a list of students in a course to a CSV file" << endl
+                                 << "17. Import the scoreboard of a course"
+                                 << "18. View the scoreboard of a course"
+                                 << "19. Update a student's result" << endl
+                                 << "20. View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA" << endl
+                                 << "21. Exit" << endl
+                                 << "Enter your choice: ";
+                            cin >> choice3;
+                            switch (choice3)
+                            {
+                            case 1:
+                            {
+                                cout << "______Create a school year______" << endl;
+                                nSY++;
+                                schoolyear = new SchoolYear[nSY];
+                                Create_SchoolYear(schoolyear[nSY - 1]);
+                                haha = true;
+                                cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc1 = false;
+                                    tieptuc2 = false;
+                                }
+                                break;
+                            }
+                            case 2:
+                            {
+                                cout << "______Create several classes for 1st-year students______" << endl;
+                                if (!haha)
+                                {
+                                    cout << "There has been no School Year created yet!" << endl;
+                                    break;
+                                }
+                                Create_Classes(schoolyear[nSY - 1]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc1 = false;
+                                    tieptuc2 = false;
+                                }
+                                cout << "Create Successfully!" << endl;
+                                break;
+                            }
+                            }
+                        }
+                    }
+                    else if (role == 2)
+                    {
+                    }
+
                     break;
                 }
                 case 2:
