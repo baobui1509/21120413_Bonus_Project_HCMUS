@@ -127,5 +127,104 @@ void Import_Account(string Account_File, User &user)
             }
         }
     }
+    user.n1 = n1;
+    user.n2 = n2;
     finn.close();
+}
+
+int Login(User user)
+{
+    bool hihi = true;
+    int choice = 0;
+    while (hihi)
+    {
+        cout << "Who are you?" << endl
+             << "1. Acadamic Staff Member" << endl
+             << "2. Student" << endl
+             << "Enter your choice: ";
+        cin >> choice;
+        string username, password;
+        bool check = false;
+        switch (choice)
+        {
+        case 1:
+        {
+            bool success = true;
+            while (success)
+            {
+                cout << "Enter UserName: ";
+                cin.ignore();
+                getline(cin, username);
+                cout << "Enter Password: ";
+                getline(cin, password);
+                for (int i = 0; i < user.n1; i++)
+                {
+                    if (user.Acadamic_Staff_Member[i].UserName == username && user.Acadamic_Staff_Member[i].Password == password)
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (check)
+                {
+                    cout << "Login Successfully!" << endl;
+                    success = false;
+                    hihi = false;
+                }
+                else
+                {
+                    cout << "Login Failed!" << endl;
+                    TiepTuc(success);
+                    if (!success)
+                    {
+                        hihi = false;
+                    }
+                }
+            }
+            break;
+        }
+        case 2:
+        {
+            bool success = true;
+            while (success)
+            {
+                cout << "Enter UserName: ";
+                cin.ignore();
+                getline(cin, username);
+                cout << "Enter Password: ";
+                getline(cin, password);
+                for (int i = 0; i < user.n1; i++)
+                {
+                    if (user.Student[i].UserName == username && user.Student[i].Password == password)
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (check)
+                {
+                    cout << "Login Successfully!" << endl;
+                    success = false;
+                    hihi = false;
+                }
+                else
+                {
+                    cout << "Login Failed!" << endl;
+                    TiepTuc(success);
+                    if (!success)
+                    {
+                        hihi = false;
+                    }
+                }
+            }
+            break;
+        }
+        default:
+        {
+            cout << "Please enter '1' or '2': " << endl;
+            break;
+        }
+        }
+    }
+    return choice;
 }

@@ -12,6 +12,7 @@ struct Account
 
 struct User
 {
+    int n1, n2;
     Account *Acadamic_Staff_Member;
     Account *Student;
 };
@@ -47,3 +48,4 @@ struct Class
 
 void TiepTuc(bool &tieptuc);
 void Import_Account(string Account_File, User &user);
+int Login(User user);
