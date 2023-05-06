@@ -240,28 +240,68 @@ void View_Profile(User user, int role, int index)
 {
     if (role == 1)
     {
-        for (int i = 0; i < user.n1; i++)
-        {
-            if (i == index)
-            {
-                cout << "Role: Acadamic Staff Member" << endl
-                     << "UserName: " << user.Acadamic_Staff_Member[i].UserName << endl
-                     << "Password: " << user.Acadamic_Staff_Member[i].Password << endl;
-                break;
-            }
-        }
+        cout << "Role: Acadamic Staff Member" << endl
+             << "UserName: " << user.Acadamic_Staff_Member[index].UserName << endl
+             << "Password: " << user.Acadamic_Staff_Member[index].Password << endl;
     }
     else if (role == 2)
     {
-        for (int i = 0; i < user.n2; i++)
-        {
-            if (i == index)
-            {
-                cout << "Role: Student" << endl
-                     << "UserName: " << user.Student[i].UserName << endl
-                     << "Password: " << user.Student[i].Password << endl;
-                break;
-            }
-        }
+        cout << "Role: Student" << endl
+             << "UserName: " << user.Student[index].UserName << endl
+             << "Password: " << user.Student[index].Password << endl;
     }
+}
+
+void Change_Password(User &user, int role, int index)
+{
+    string pw;
+    cout << "Enter new Password: ";
+    getline(cin, pw);
+    if (role == 1)
+    {
+        while (pw == user.Acadamic_Staff_Member[index].Password)
+        {
+            cout << "The new password is the same as the old one" << endl
+                 << "Enter new Password: ";
+            getline(cin, pw);
+        }
+        user.Acadamic_Staff_Member[index].Password = pw;
+    }
+    else if (role == 2)
+    {
+        while (pw == user.Student[index].Password)
+        {
+            cout << "The new password is the same as the old one" << endl
+                 << "Enter new Password: ";
+            getline(cin, pw);
+        }
+        user.Student[index].Password = pw;
+    }
+    string temp = "";
+    for (int i = 0; i < user.n1; i++)
+    {
+        temp += "Acadamic Staff Member, ";
+        temp += user.Acadamic_Staff_Member[i].UserName;
+        temp += ", ";
+        temp += user.Acadamic_Staff_Member[i].Password;
+        temp += '\n';
+    }
+    for (int i = 0; i < user.n2; i++)
+    {
+        temp += "Student, ";
+        temp += user.Student[i].UserName;
+        temp += ", ";
+        temp += user.Student[i].Password;
+        temp += '\n';
+    }
+    cout << temp;
+    ofstream fout("Account.csv");
+    if (!fout.is_open())
+    {
+        cout << "Can't open Account file!" << endl;
+        return;
+    }
+    fout << temp;
+    fout.close();
+    cout << "Change Successfully!" << endl;
 }

@@ -50,3 +50,4 @@ void TiepTuc(bool &tieptuc);
 void Import_Account(string Account_File, User &user);
 int Login(User user, int &index);
 void View_Profile(User user, int role, int index);
+void Change_Password(User &user, int role, int index);

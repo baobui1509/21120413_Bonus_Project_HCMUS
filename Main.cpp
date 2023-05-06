@@ -21,6 +21,11 @@ int main()
             int index = -1;
             int role = 0;
             role = Login(user, index);
+            if (index == -1)
+            {
+                tieptuc1 = false;
+                break;
+            }
             bool tieptuc2 = true;
             int choice2 = 0;
             while (tieptuc2)
@@ -54,6 +59,8 @@ int main()
                 case 3:
                 {
                     cout << "______Change password______" << endl;
+                    cin.ignore();
+                    Change_Password(user, role, index);
                     TiepTuc(tieptuc2);
                     if (!tieptuc2)
                     {
