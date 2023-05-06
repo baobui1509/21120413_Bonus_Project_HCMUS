@@ -6,9 +6,9 @@ void TiepTuc(bool &tieptuc)
     int choice = 0;
     while (hihi)
     {
-        std::cout << "Ban co muon tiep tuc khong?" << endl
-                  << "1. Co            2. Khong" << endl
-                  << "Nhap yeu cau cua ban: ";
+        std::cout << "    Continue?" << endl
+                  << "1. Yes     2. No" << endl
+                  << "Enter your choice: ";
         cin >> choice;
         switch (choice)
         {
@@ -23,9 +23,9 @@ void TiepTuc(bool &tieptuc)
             tieptuc = false;
             break;
         }
-        case 3:
+        default:
         {
-            std::cout << "Yeu cau khong hop le!" << endl;
+            std::cout << "Fail chocie!" << endl;
         }
         }
     }
@@ -132,7 +132,7 @@ void Import_Account(string Account_File, User &user)
     finn.close();
 }
 
-int Login(User user)
+int Login(User user, int &index)
 {
     bool hihi = true;
     int choice = 0;
@@ -161,6 +161,7 @@ int Login(User user)
                 {
                     if (user.Acadamic_Staff_Member[i].UserName == username && user.Acadamic_Staff_Member[i].Password == password)
                     {
+                        index = i;
                         check = true;
                         break;
                     }
@@ -178,6 +179,10 @@ int Login(User user)
                     if (!success)
                     {
                         hihi = false;
+                    }
+                    else
+                    {
+                        success = false;
                     }
                 }
             }
@@ -197,6 +202,7 @@ int Login(User user)
                 {
                     if (user.Student[i].UserName == username && user.Student[i].Password == password)
                     {
+                        index = i;
                         check = true;
                         break;
                     }
@@ -227,4 +233,35 @@ int Login(User user)
         }
     }
     return choice;
+}
+
+// Chu y kiem tra xem co dang nhap chua
+void View_Profile(User user, int role, int index)
+{
+    if (role == 1)
+    {
+        for (int i = 0; i < user.n1; i++)
+        {
+            if (i == index)
+            {
+                cout << "Role: Acadamic Staff Member" << endl
+                     << "UserName: " << user.Acadamic_Staff_Member[i].UserName << endl
+                     << "Password: " << user.Acadamic_Staff_Member[i].Password << endl;
+                break;
+            }
+        }
+    }
+    else if (role == 2)
+    {
+        for (int i = 0; i < user.n2; i++)
+        {
+            if (i == index)
+            {
+                cout << "Role: Student" << endl
+                     << "UserName: " << user.Student[i].UserName << endl
+                     << "Password: " << user.Student[i].Password << endl;
+                break;
+            }
+        }
+    }
 }

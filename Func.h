@@ -48,4 +48,5 @@ struct Class
 
 void TiepTuc(bool &tieptuc);
 void Import_Account(string Account_File, User &user);
-int Login(User user);
+int Login(User user, int &index);
+void View_Profile(User user, int role, int index);
