@@ -1,12 +1,19 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
-struct User
+struct Account
 {
-
     string UserName;
     string Password;
+};
+
+struct User
+{
+    Account *Acadamic_Staff_Member;
+    Account *Student;
 };
 
 struct Student
@@ -20,16 +27,16 @@ struct Student
     string SocialID;
 };
 
-struct Semester
-{
-    Course *CourseList;
-};
-
 struct Course
 {
     Student *StudentList;
     string CourseID, CourseName, ClassName, TeacherName, DayOfWeek;
     int NumberOfCredits, MaxNumberStudent, Session;
+};
+
+struct Semester
+{
+    Course *CourseList;
 };
 
 struct Class
@@ -38,4 +45,5 @@ struct Class
     string ClassName;
 };
 
-// hehe
+void TiepTuc(bool &tieptuc);
+void Import_Account(string Account_File, User &user);
