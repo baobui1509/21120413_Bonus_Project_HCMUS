@@ -294,7 +294,7 @@ void Change_Password(User &user, int role, int index)
         temp += user.Student[i].Password;
         temp += '\n';
     }
-    cout << temp;
+    // cout << temp;
     ofstream fout("Account.csv");
     if (!fout.is_open())
     {
@@ -331,7 +331,204 @@ void Create_Classes(SchoolYear &sy)
     cin.ignore();
     for (int i = 0; i < sy.nClass; i++)
     {
-        cout << "Enter the name of class: ";
+        cout << "Enter the name of class " << i + 1 << ": ";
         getline(cin, sy.ClassList[i].ClassName);
+    }
+}
+
+void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3)
+{
+    string classname;
+    int xClass;
+    bool check1 = false;
+    bool huhu = true;
+    while (huhu)
+    {
+        cout << "Enter the name of class to which you want to add students: ";
+        getline(cin, classname);
+        for (int i = 0; i < sy.nClass; i++)
+        {
+            if (sy.ClassList[i].ClassName == classname)
+            {
+                check1 = true;
+                xClass = i;
+                break;
+            }
+        }
+        if (!check1)
+        {
+            cout << "The Class Name does not exist!" << endl;
+            TiepTuc(huhu);
+            if (!huhu)
+            {
+                tieptuc3 = false;
+                return;
+            }
+            else
+            {
+                cin.ignore();
+            }
+        }
+        else
+        {
+            huhu = false;
+        }
+    }
+
+    ifstream fin(FileName);
+    if (!fin.is_open())
+    {
+        cout << "Can not open file (" << FileName << ")" << endl;
+        return;
+    }
+    int nStudent = 0;
+    string line = "";
+    int index = -1;
+    while (getline(fin, line))
+    {
+        nStudent++;
+    }
+    nStudent--;
+    sy.ClassList[xClass].nStudent = nStudent;
+    fin.close();
+    sy.ClassList[xClass].StudentList = new Student[nStudent];
+    ifstream finn(FileName);
+    // No, Student ID, First name, Last name, Gender, Date of Birth, Social ID
+    // 1, 00000001, Bui, Bao, Nam, Male, 10/1/2003, S1
+
+    while (getline(finn, line))
+    {
+        cout << line << endl;
+        if (index != -1)
+        {
+            // No
+            int x = line.find(',');
+            sy.ClassList[xClass].StudentList[index].No = stoi(line.substr(0, x));
+            // cout << "No: " << stoi(line.substr(0, x)) << endl;
+            string left = line.substr(x + 2, line.length() - x - 2);
+            // Student ID
+            x = left.find(',');
+            sy.ClassList[xClass].StudentList[index].StudentID = left.substr(0, x);
+            // cout << "StudentID: " << left.substr(0, x) << endl;
+            left = left.substr(x + 2, left.length() - x - 2);
+            // First name
+            x = left.find(',');
+            sy.ClassList[xClass].StudentList[index].FirstName = left.substr(0, x);
+            // cout << "FirstName: " << left.substr(0, x) << endl;
+            left = left.substr(x + 2, left.length() - x - 2);
+            // Last name
+            x = left.find(',');
+            sy.ClassList[xClass].StudentList[index].LastName = left.substr(0, x);
+            // cout << "LastName: " << left.substr(0, x) << endl;
+            left = left.substr(x + 2, left.length() - x - 2);
+            // Gender
+            x = left.find(',');
+            sy.ClassList[xClass].StudentList[index].Gender = left.substr(0, x);
+            // cout << "Gender: " << left.substr(0, x) << endl;
+            left = left.substr(x + 2, left.length() - x - 2);
+            // Birthday
+            x = left.find(',');
+            sy.ClassList[xClass].StudentList[index].Birthday = left.substr(0, x);
+            // cout << "Birthday: " << left.substr(0, x) << endl;
+            left = left.substr(x + 2, left.length() - x - 2);
+            // SocialID
+            x = left.find(',');
+            sy.ClassList[xClass].StudentList[index].SocialID = left.substr(0, x);
+            // cout << "SocialID: " << left.substr(0, x) << endl;
+            left = left.substr(x + 2, left.length() - x - 2);
+        }
+        index++;
+    }
+    // View_StudentList(sy.ClassList[xClass]);
+}
+
+void View_StudentList(Class X)
+{
+    // No, Student ID, First name, Last name, Gender, Date of Birth, Social ID
+    cout << "No"
+         << "\t"
+         << "\t"
+         << "Student ID"
+         << "\t"
+         << "\t"
+         << " First name "
+         << "\t"
+         << "\t"
+         << " Last Name "
+         << "\t"
+         << "\t"
+         << "Gender"
+         << "\t "
+         << "\t "
+         << "Date of Birth "
+         << "\t"
+         << "\t"
+         << "Social ID" << endl;
+    for (int i = 0; i < X.nStudent; i++)
+    {
+        cout << X.StudentList[i].No << "\t"
+             << "\t" << X.StudentList[i].StudentID << "\t"
+             << "\t" << X.StudentList[i].FirstName << "\t"
+             << "\t" << X.StudentList[i].LastName << "\t"
+             << "\t" << X.StudentList[i].Gender << "\t"
+             << "\t" << X.StudentList[i].Birthday << "\t"
+             << "\t" << X.StudentList[i].SocialID << endl;
+    }
+}
+
+void Enter_And_Check_ClassName(SchoolYear &schoolyear, int &xClass, bool &tieptuc3)
+{
+    string name;
+    bool huhu = true;
+    bool check1 = false;
+    cin.ignore();
+    while (huhu)
+    {
+        cout << "Enter the name of class: ";
+        getline(cin, name);
+        for (int i = 0; i < schoolyear.nClass; i++)
+        {
+            if (schoolyear.ClassList[i].ClassName == name)
+            {
+                check1 = true;
+                xClass = i;
+                break;
+            }
+        }
+        if (!check1)
+        {
+            cout << "Class name does not exist!" << endl;
+            TiepTuc(huhu);
+            if (!huhu)
+            {
+                tieptuc3 = false;
+                break;
+            }
+            else
+            {
+                cin.ignore();
+            }
+        }
+        else
+        {
+            if (schoolyear.ClassList[xClass].nStudent != 0)
+            {
+                huhu = false;
+            }
+            else
+            {
+                cout << "This class has no Student!" << endl;
+                TiepTuc(huhu);
+                if (!huhu)
+                {
+                    tieptuc3 = false;
+                    break;
+                }
+                else
+                {
+                    cin.ignore();
+                }
+            }
+        }
     }
 }

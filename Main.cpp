@@ -35,7 +35,8 @@ int main()
                      << "2. View your profile" << endl
                      << "3. Change password" << endl
                      << "4. Log out" << endl
-                     << "5. Exit " << endl
+                     << "5. Turn back" << endl
+                     << "6. Exit " << endl
                      << "Enter your choice: ";
                 cin >> choice2;
                 switch (choice2)
@@ -43,12 +44,13 @@ int main()
                 case 1:
                 {
                     cout << "____________________________________Funtions________________________________________" << endl;
+                    // Acadamic Staff Member
                     if (role == 1)
                     {
                         SchoolYear *schoolyear;
                         int nSY = 0;
                         bool tieptuc3 = true;
-                        bool haha = false;
+                        bool haha1 = false, haha2 = false;
                         int choice3 = 0;
                         while (tieptuc3)
                         {
@@ -71,7 +73,8 @@ int main()
                                  << "18. View the scoreboard of a course"
                                  << "19. Update a student's result" << endl
                                  << "20. View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA" << endl
-                                 << "21. Exit" << endl
+                                 << "21. Turn back" << endl
+                                 << "22. Exit" << endl
                                  << "Enter your choice: ";
                             cin >> choice3;
                             switch (choice3)
@@ -81,8 +84,9 @@ int main()
                                 cout << "______Create a school year______" << endl;
                                 nSY++;
                                 schoolyear = new SchoolYear[nSY];
+                                // Nho kiem tra nam hoc moi co trung lap khong?
                                 Create_SchoolYear(schoolyear[nSY - 1]);
-                                haha = true;
+                                haha1 = true;
                                 cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
@@ -94,12 +98,14 @@ int main()
                             }
                             case 2:
                             {
-                                cout << "______Create several classes for 1st-year students______" << endl;
-                                if (!haha)
+                                if (!haha1)
                                 {
-                                    cout << "There has been no School Year created yet!" << endl;
+                                    cout << "THERE HAS BEEN NO SCHOOL YEAR CREATED YET!" << endl;
                                     break;
                                 }
+                                cout << "______Create several classes for 1st-year students______" << endl;
+
+                                haha2 = true;
                                 Create_Classes(schoolyear[nSY - 1]);
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
@@ -110,13 +116,72 @@ int main()
                                 cout << "Create Successfully!" << endl;
                                 break;
                             }
+                            case 3:
+                            {
+                                cout << "______Add new 1st year students to 1st-year classes______" << endl;
+                                if (!haha2)
+                                {
+                                    cout << "THERE HAS NO CLASS CREATED YET!" << endl;
+                                    break;
+                                }
+                                string NameFile;
+                                cout << "Enter input file name: ";
+                                cin.ignore();
+                                getline(cin, NameFile);
+                                Add_Students_Class(schoolyear[nSY - 1], NameFile, tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                    break;
+                                }
+                                cout << "Add Successfully!" << endl;
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 14:
+                            {
+                                if (!haha1)
+                                {
+                                    cout << "THERE HAS BEEN NO SCHOOL YEAR CREATED YET!" << endl;
+                                    break;
+                                }
+                                cout << "______View a list of students in a class______" << endl;
+                                int xClass;
+                                Enter_And_Check_ClassName(schoolyear[nSY - 1], xClass, tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                    break;
+                                }
+                                // Neu lop do chua duoc them sinh vien vao?
+                                View_StudentList(schoolyear[nSY - 1].ClassList[xClass]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 21:
+                            {
+                                tieptuc3 = false;
+                                break;
+                            }
                             }
                         }
                     }
+                    // Student
                     else if (role == 2)
                     {
                     }
-
                     break;
                 }
                 case 2:
@@ -149,6 +214,12 @@ int main()
                     break;
                 }
                 case 5:
+                {
+                    cout << "______Turn back______" << endl;
+                    tieptuc2 = false;
+                    break;
+                }
+                case 6:
                 {
                     cout << "______Exit______" << endl;
                     tieptuc1 = false;
