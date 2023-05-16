@@ -180,10 +180,10 @@ int Login(User user, int &index)
                     {
                         hihi = false;
                     }
-                    else
-                    {
-                        success = false;
-                    }
+                    // else
+                    // {
+                    //     success = false;
+                    // }
                 }
             }
             break;
@@ -439,6 +439,7 @@ void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3)
         }
         index++;
     }
+    sy.ClassList[xClass].Students_Added = true;
     // View_StudentList(sy.ClassList[xClass]);
 }
 
@@ -502,7 +503,6 @@ void Enter_And_Check_ClassName(SchoolYear &schoolyear, int &xClass, bool &tieptu
             if (!huhu)
             {
                 tieptuc3 = false;
-                break;
             }
             else
             {
@@ -511,24 +511,7 @@ void Enter_And_Check_ClassName(SchoolYear &schoolyear, int &xClass, bool &tieptu
         }
         else
         {
-            if (schoolyear.ClassList[xClass].nStudent != 0)
-            {
-                huhu = false;
-            }
-            else
-            {
-                cout << "This class has no Student!" << endl;
-                TiepTuc(huhu);
-                if (!huhu)
-                {
-                    tieptuc3 = false;
-                    break;
-                }
-                else
-                {
-                    cin.ignore();
-                }
-            }
+            huhu = false;
         }
     }
 }

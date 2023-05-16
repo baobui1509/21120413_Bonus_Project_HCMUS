@@ -146,13 +146,14 @@ int main()
                             }
                             case 14:
                             {
-                                if (!haha1)
+                                if (!haha2)
                                 {
-                                    cout << "THERE HAS BEEN NO SCHOOL YEAR CREATED YET!" << endl;
+                                    cout << "THERE HAS BEEN NO CLASS CREATED YET!" << endl;
                                     break;
                                 }
                                 cout << "______View a list of students in a class______" << endl;
                                 int xClass;
+                                // Nhap va kiem tra class name co ton tai khong
                                 Enter_And_Check_ClassName(schoolyear[nSY - 1], xClass, tieptuc3);
                                 if (!tieptuc3)
                                 {
@@ -160,8 +161,15 @@ int main()
                                     tieptuc1 = false;
                                     break;
                                 }
-                                // Neu lop do chua duoc them sinh vien vao?
-                                View_StudentList(schoolyear[nSY - 1].ClassList[xClass]);
+                                // Neu lop do chua duoc them sinh vien vao
+                                if (!schoolyear[nSY - 1].ClassList[xClass].Students_Added)
+                                {
+                                    cout << "THIS CLASS HAS NO STUDENT!" << endl;
+                                }
+                                else
+                                {
+                                    View_StudentList(schoolyear[nSY - 1].ClassList[xClass]);
+                                }
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {

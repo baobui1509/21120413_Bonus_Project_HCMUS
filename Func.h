@@ -53,6 +53,7 @@ struct Semester
 
 struct Class
 {
+    bool Students_Added;
     int nStudent, nMark;
     Student *StudentList;
     Mark *MarkBoard;
