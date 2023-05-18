@@ -25,7 +25,7 @@ void TiepTuc(bool &tieptuc)
         }
         default:
         {
-            std::cout << "Fail chocie!" << endl;
+            std::cout << "Illegal chocie!" << endl;
         }
         }
     }
@@ -306,7 +306,7 @@ void Change_Password(User &user, int role, int index)
     cout << "Change Successfully!" << endl;
 }
 
-void Create_SchoolYear(SchoolYear &schoolyear)
+void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3)
 {
     cout << "Enter start year: ";
     cin >> schoolyear.StartYear;
@@ -316,6 +316,17 @@ void Create_SchoolYear(SchoolYear &schoolyear)
         cin >> schoolyear.StartYear;
     }
     schoolyear.EndYear = schoolyear.StartYear + 1;
+    schoolyear.SemesterList = new Semester[3];
+    if (!schoolyear.SemesterList)
+    {
+        cout << "OVERFLOW!" << endl;
+        tieptuc3 = false;
+        return;
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        schoolyear.SemesterList[i].Check = false;
+    }
 }
 
 void Create_Classes(SchoolYear &sy)
@@ -512,6 +523,106 @@ void Enter_And_Check_ClassName(SchoolYear &schoolyear, int &xClass, bool &tieptu
         else
         {
             huhu = false;
+        }
+    }
+}
+
+void Create_Semester(SchoolYear *&sy, int nSY, int &iSY, int &iSemester)
+{
+    int x, y;
+    bool huhu = true;
+    cout << "Which Semester do you want to create?" << endl
+         << "1. Semester 1          2. Semester 2             3. Semester 3" << endl
+         << "Enter your choice: ";
+    cin >> x;
+    while (x < 1 || x > 3)
+    {
+        cout << "Enter a number in [1, 3]: ";
+        cin >> x;
+    }
+    while (huhu)
+    {
+        cout << "Which School Year do you want to add this Semester in: " << endl;
+        for (int i = 0; i < nSY; i++)
+        {
+            cout << i + 1 << ". School Year " << sy[i].StartYear << "-" << sy[i].EndYear << "\t";
+        }
+        cout << endl;
+        cin >> y;
+        while (y < 1 || y > nSY)
+        {
+            cout << "Enter a number in [1, " << nSY << "]: ";
+            cin >> y;
+        }
+        // Neu nam hoc nay da co hoc ky can tao
+        if (sy[y - 1].SemesterList[x - 1].Check)
+        {
+            bool k = true;
+            int replace;
+            while (k)
+            {
+                cout << "This School Year has been having the Semester " << y << endl
+                     << "Do you want to replace?" << endl
+                     << "1. Yes        2. No" << endl;
+                cin >> replace;
+                switch (replace)
+                {
+                case 1:
+                {
+                    iSY = y - 1;
+                    iSemester = x - 1;
+                    k = false;
+                    huhu = false;
+                    break;
+                }
+                case 2:
+                {
+                    bool kk = true;
+                    int p;
+                    while (kk)
+                    {
+                        cout << "Do you want to choose another School Year?" << endl
+                             << "1. Yes                2. No" << endl
+                             << "Enter your choice: ";
+                        cin >> p;
+                        switch (p)
+                        {
+                        case 1:
+                        {
+                            kk = false;
+                            k = false;
+                            cout << "Create Successfully!" << endl;
+                            break;
+                        }
+                        case 2:
+                        {
+                            k = kk = huhu = false;
+                            break;
+                        }
+                        default:
+                        {
+                            cout << "Illegal choice!" << endl;
+                            break;
+                        }
+                        }
+                    }
+                    break;
+                }
+                default:
+                {
+                    cout << "Illegal choice!" << endl;
+                    break;
+                }
+                }
+            }
+        }
+        else
+        {
+            huhu = false;
+            sy[y - 1].SemesterList[x - 1].Check = true;
+            iSY = y - 1;
+            iSemester = x - 1;
+            cout << "Create Successfully!" << endl;
         }
     }
 }

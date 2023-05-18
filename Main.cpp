@@ -48,6 +48,7 @@ int main()
                     if (role == 1)
                     {
                         SchoolYear *schoolyear;
+                        int iSY, iSemester;
                         int nSY = 0;
                         bool tieptuc3 = true;
                         bool haha1 = false, haha2 = false;
@@ -85,7 +86,13 @@ int main()
                                 nSY++;
                                 schoolyear = new SchoolYear[nSY];
                                 // Nho kiem tra nam hoc moi co trung lap khong?
-                                Create_SchoolYear(schoolyear[nSY - 1]);
+                                Create_SchoolYear(schoolyear[nSY - 1], tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc1 = false;
+                                    tieptuc2 = false;
+                                    break;
+                                }
                                 haha1 = true;
                                 cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
                                 TiepTuc(tieptuc3);
@@ -101,6 +108,12 @@ int main()
                                 if (!haha1)
                                 {
                                     cout << "THERE HAS BEEN NO SCHOOL YEAR CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
                                     break;
                                 }
                                 cout << "______Create several classes for 1st-year students______" << endl;
@@ -122,6 +135,12 @@ int main()
                                 if (!haha2)
                                 {
                                     cout << "THERE HAS NO CLASS CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
                                     break;
                                 }
                                 string NameFile;
@@ -136,6 +155,32 @@ int main()
                                     break;
                                 }
                                 cout << "Add Successfully!" << endl;
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 4:
+                            {
+                                if (!haha1)
+                                {
+                                    cout << "THERE HAS BEEN NO SCHOOL YEAR CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Create a semester______" << endl;
+                                // Tao hoc ky
+                                // iSY: index cua nam hoc muon them hoc ky
+                                // iSemester: index cua hoc ky
+                                Create_Semester(schoolyear, nSY, iSY, iSemester);
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {
@@ -181,6 +226,17 @@ int main()
                             case 21:
                             {
                                 tieptuc3 = false;
+                                break;
+                            }
+                            case 22:
+                            {
+                                cout << "______Exist______" << endl;
+                                tieptuc1 = tieptuc2 = tieptuc3 = false;
+                                break;
+                            }
+                            default:
+                            {
+                                cout << "Illegal choice!" << endl;
                                 break;
                             }
                             }
@@ -236,7 +292,7 @@ int main()
                 }
                 default:
                 {
-                    cout << "Fail Choice" << endl;
+                    cout << "Illegal Choice" << endl;
                     break;
                 }
                 }
