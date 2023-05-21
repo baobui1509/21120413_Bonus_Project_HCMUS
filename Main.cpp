@@ -51,7 +51,7 @@ int main()
                         int iSY, iSemester;
                         int nSY = 0;
                         bool tieptuc3 = true;
-                        bool haha1 = false, haha2 = false;
+                        bool haha1 = false, haha2 = false, haha4 = false;
                         int choice3 = 0;
                         while (tieptuc3)
                         {
@@ -181,6 +181,33 @@ int main()
                                 // iSY: index cua nam hoc muon them hoc ky
                                 // iSemester: index cua hoc ky
                                 Create_Semester(schoolyear, nSY, iSY, iSemester);
+                                haha4 = true;
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 5:
+                            {
+                                if (!haha4)
+                                {
+                                    cout << "YOU HAVE TO CREATE A COURSE FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Add a course to this semester (A course will be taught in only one session in a week)______" << endl;
+                                cin.ignore();
+                                Course course;
+                                Course_Input(course);
+                                Add_Course_To_Semester(schoolyear[nSY - 1].SemesterList[iSemester], course);
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {

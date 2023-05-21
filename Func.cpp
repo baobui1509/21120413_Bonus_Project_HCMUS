@@ -547,7 +547,8 @@ void Create_Semester(SchoolYear *&sy, int nSY, int &iSY, int &iSemester)
         {
             cout << i + 1 << ". School Year " << sy[i].StartYear << "-" << sy[i].EndYear << "\t";
         }
-        cout << endl;
+        cout << endl
+             << "Enter your choice: ";
         cin >> y;
         while (y < 1 || y > nSY)
         {
@@ -620,9 +621,76 @@ void Create_Semester(SchoolYear *&sy, int nSY, int &iSY, int &iSemester)
         {
             huhu = false;
             sy[y - 1].SemesterList[x - 1].Check = true;
+            sy[y - 1].SemesterList[x - 1].CourseList = NULL;
+            sy[y - 1].SemesterList[x - 1].n = 0;
             iSY = y - 1;
             iSemester = x - 1;
             cout << "Create Successfully!" << endl;
         }
+    }
+}
+
+void Course_Input(Course &course)
+{
+    // string CourseID, CourseName, ClassName, TeacherName, DayOfWeek, Session;
+    // int NumberOfCredits, MaxNumberStudent;
+    cout << "Enter course ID: ";
+    getline(cin, course.CourseID);
+    cout << "Enter Course name: ";
+    getline(cin, course.CourseName);
+    cout << "Enter class name: ";
+    getline(cin, course.ClassName);
+    cout << "Enter teacher name: ";
+    getline(cin, course.TeacherName);
+    cout << "Enter day of the week: ";
+    getline(cin, course.DayOfWeek);
+    cout << "Enter the session: ";
+    cin >> course.Session;
+    cout << "Enter number of credits: ";
+    cin >> course.NumberOfCredits;
+    cout << "Enter the maximum number of students: ";
+    cin >> course.MaxNumberStudent;
+    course.n = 0;
+    course.StudentList = NULL;
+    course.MarkBoard = NULL;
+}
+
+void Add_Course_To_Semester(Semester &semester, Course course)
+{
+    // Neu semester chua co course nao
+    if (semester.n == 0 && !semester.CourseList)
+    {
+        semester.n++;
+        semester.CourseList = new Course[semester.n];
+        semester.CourseList[semester.n - 1] = course;
+        cout << "Add Successfully!" << endl;
+    }
+    // semester da co course
+    else
+    {
+        // Kiem tra courseID co ton tai chua
+        for (int i = 0; i < semester.n; i++)
+        {
+            if (semester.CourseList[i].CourseID == course.CourseID)
+            {
+                cout << "Course ID already exists!" << endl;
+                return;
+            }
+        }
+        // Neu CourseID chua ton tai thi them vao CourseList
+        semester.n++;
+        Course *temp = new Course[semester.n];
+        for (int i = 0; i < semester.n - 1; i++)
+        {
+            temp[i] = semester.CourseList[i];
+        }
+        temp[semester.n - 1] = course;
+        delete[] semester.CourseList;
+        semester.CourseList = new Course[semester.n];
+        for (int i = 0; i < semester.n; i++)
+        {
+            semester.CourseList[i] = temp[i];
+        }
+        cout << "Add Successfully!" << endl;
     }
 }
