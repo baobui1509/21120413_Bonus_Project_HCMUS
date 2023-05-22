@@ -54,7 +54,7 @@ struct Semester
 
 struct Class
 {
-    bool Students_Added;
+    // bool Students_Added;
     int nStudent, nMark;
     Student *StudentList;
     Mark *MarkBoard;
@@ -82,3 +82,4 @@ void Enter_And_Check_ClassName(SchoolYear &schoolyear, int &xClass, bool &tieptu
 void Create_Semester(SchoolYear *&sy, int nSY, int &iSY, int &iSemester);
 void Course_Input(Course &course);
 void Add_Course_To_Semester(Semester &semester, Course course);
+void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3);
