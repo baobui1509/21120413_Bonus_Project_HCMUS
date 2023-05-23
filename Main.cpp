@@ -244,6 +244,29 @@ int main()
                                 }
                                 break;
                             }
+                            case 13:
+                            {
+                                if (!haha2)
+                                {
+                                    cout << "THERE HAS NO CLASS CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______View a list of classes______" << endl;
+                                View_ClassList(schoolyear, nSY);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
                             case 14:
                             {
                                 if (!haha2)
@@ -276,6 +299,29 @@ int main()
                                 {
                                     View_StudentList(schoolyear[nSY - 1].ClassList[xClass]);
                                 }
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 15:
+                            {
+                                if (!haha5)
+                                {
+                                    cout << "THERE HAS BEEN NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "_____View a list of students in a course_____" << endl;
+                                View_StudentList_Course(schoolyear, nSY);
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {

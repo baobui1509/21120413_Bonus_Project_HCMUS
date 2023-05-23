@@ -414,27 +414,6 @@ void Create_Classes(SchoolYear &sy)
                     huhu = false;
                 }
             }
-            // // Kiem tra co ton tai ten class chua
-            // bool huhu = true;
-            // while (huhu) // Kiem tra trong list moi
-            // {
-            //     int j = 0;
-            //     while (j < i)
-            //     {
-            //         if (classlist[i].ClassName == classlist[j].ClassName)
-            //         {
-            //             cout << "Class Name already exists!" << endl
-            //                  << "Enter another name: ";
-            //             getline(cin, classlist[i].ClassName);
-            //             break;
-            //         }
-            //         j++;
-            //     }
-            //     if (j == i)
-            //     {
-            //         huhu = false;
-            //     }
-            // }
 
             classlist[sy.nClass - m + i].nStudent = 0;
             classlist[sy.nClass - m + i].nMark = 0;
@@ -915,4 +894,103 @@ void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3)
         index++;
     }
     finn.close();
+}
+
+void View_ClassList(SchoolYear *sy, int nSY)
+{
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    for (int i = 0; i < sy[choice - 1].nClass; i++)
+    {
+        cout << i + 1 << ". " << sy[choice - 1].ClassList[i].ClassName << endl;
+    }
+}
+
+void View_StudentList_Course(SchoolYear *sy, int nSY)
+{
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    cout << "Which Semester?" << endl;
+    int k = 1;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            cout << k << ". Semester " << i + 1 << endl;
+            k++;
+        }
+    }
+    cout << "Choose semester: ";
+    int iSemester;
+    cin >> iSemester;
+    while (iSemester <= 0 || iSemester > k)
+    {
+        cout << "Please enter a number in [1, " << k << "]: ";
+        cin >> iSemester;
+    }
+    iSemester--;
+    int h = 1;
+    cout << "Which CourseID?" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].n; i++)
+    {
+        h++;
+        cout << i + 1 << ". " << sy[choice - 1].SemesterList[iSemester].CourseList[i].CourseID << endl;
+    }
+    int iCourse;
+    cout << "Choose CourseID: ";
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > h)
+    {
+        cout << "Please enter a number in [1, " << h << "]: ";
+        cin >> iCourse;
+    }
+    cout << "No"
+         << "\t"
+         << "\t"
+         << "Student ID"
+         << "\t"
+         << "\t"
+         << " First name "
+         << "\t"
+         << "\t"
+         << " Last Name "
+         << "\t"
+         << "\t"
+         << "Gender"
+         << "\t "
+         << "\t "
+         << "Date of Birth "
+         << "\t"
+         << "\t"
+         << "Social ID" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n; i++)
+    {
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].No << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].StudentID << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].FirstName << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].LastName << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Gender << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Birthday << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].SocialID << endl;
+    }
 }

@@ -83,3 +83,5 @@ void Create_Semester(SchoolYear *&sy, int nSY, int &iSY, int &iSemester);
 void Course_Input(Course &course);
 void Add_Course_To_Semester(Semester &semester, Course course);
 void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3);
+void View_ClassList(SchoolYear *sy, int nSY);
+void View_StudentList_Course(SchoolYear *sy, int nSY);
