@@ -354,6 +354,26 @@ void Create_Classes(SchoolYear &sy)
             cout << "Enter the name of class " << i + 1 << ": ";
             // Nhap ten khong duoc trung
             getline(cin, sy.ClassList[i].ClassName);
+            bool huhu = true;
+            while (huhu)
+            {
+                int j = 0;
+                while (j < i)
+                {
+                    if (sy.ClassList[i].ClassName == sy.ClassList[j].ClassName)
+                    {
+                        cout << "Class Name already exists!" << endl
+                             << "Enter another name: ";
+                        getline(cin, sy.ClassList[i].ClassName);
+                        break;
+                    }
+                    j++;
+                }
+                if (j == i)
+                {
+                    huhu = false;
+                }
+            }
 
             sy.ClassList[i].nStudent = 0;
             sy.ClassList[i].nMark = 0;
@@ -374,6 +394,48 @@ void Create_Classes(SchoolYear &sy)
         {
             cout << "Enter the name of class " << i + 1 << ": ";
             getline(cin, classlist[sy.nClass - m + i].ClassName);
+            bool huhu = true;
+            while (huhu)
+            {
+                int j = 0;
+                while (j < sy.nClass - m + i)
+                {
+                    if (classlist[sy.nClass - m + i].ClassName == classlist[j].ClassName)
+                    {
+                        cout << "Class Name already exists!" << endl
+                             << "Enter another name: ";
+                        getline(cin, classlist[sy.nClass - m + i].ClassName);
+                        break;
+                    }
+                    j++;
+                }
+                if (j == sy.nClass - m + i)
+                {
+                    huhu = false;
+                }
+            }
+            // // Kiem tra co ton tai ten class chua
+            // bool huhu = true;
+            // while (huhu) // Kiem tra trong list moi
+            // {
+            //     int j = 0;
+            //     while (j < i)
+            //     {
+            //         if (classlist[i].ClassName == classlist[j].ClassName)
+            //         {
+            //             cout << "Class Name already exists!" << endl
+            //                  << "Enter another name: ";
+            //             getline(cin, classlist[i].ClassName);
+            //             break;
+            //         }
+            //         j++;
+            //     }
+            //     if (j == i)
+            //     {
+            //         huhu = false;
+            //     }
+            // }
+
             classlist[sy.nClass - m + i].nStudent = 0;
             classlist[sy.nClass - m + i].nMark = 0;
             classlist[sy.nClass - m + i].StudentList = NULL;
@@ -766,7 +828,7 @@ void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3)
         }
         if (!check1)
         {
-            cout << "The Class Name does not exist!" << endl;
+            cout << "The CourseID does not exist!" << endl;
             TiepTuc(huhu);
             if (!huhu)
             {
@@ -783,9 +845,33 @@ void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3)
             huhu = false;
         }
     }
-    int index = -1;
+
+    // Dem so luong hoc sinh co trong file CSV
     string line = "";
+    int n = 0;
+    if (!fin.is_open())
+    {
+        cout << "Can not open file " << FileName << endl;
+        return;
+    }
     while (getline(fin, line))
+    {
+        n++;
+    }
+    fin.close();
+    n--;
+    s.n = n;
+    s.CourseList[xCourse].StudentList = new Student[s.n];
+    if (!s.CourseList[xCourse].StudentList)
+    {
+        cout << "OVERFLOW!" << endl;
+        return;
+    }
+
+    // Doc va luu thong tin sinh vien vao CourseList
+    ifstream finn(FileName);
+    int index = -1;
+    while (getline(finn, line))
     {
         cout << line << endl;
         if (index != -1)
@@ -828,5 +914,5 @@ void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3)
         }
         index++;
     }
-    fin.close();
+    finn.close();
 }
