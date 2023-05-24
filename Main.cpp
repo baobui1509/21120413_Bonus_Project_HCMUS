@@ -244,6 +244,29 @@ int main()
                                 }
                                 break;
                             }
+                            case 7:
+                            {
+                                if (!haha5)
+                                {
+                                    cout << "THERE HAS NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______View the list of courses______" << endl;
+                                View_CourseList(schoolyear[nSY - 1].SemesterList[iSemester]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
                             case 13:
                             {
                                 if (!haha2)
@@ -421,3 +444,26 @@ int main()
     }
     return 0;
 }
+
+// 1
+// 1
+// xyz
+// 321
+// 1
+// 1
+// 2022
+// 1
+// 4
+// 1
+// 1
+// 1
+// 5
+// COURSE01
+// Mang may tinh
+// MMT
+// Hoang Dung
+// Sunday
+// 1
+// 4
+// 50
+// 1

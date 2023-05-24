@@ -994,3 +994,45 @@ void View_StudentList_Course(SchoolYear *sy, int nSY)
              << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].SocialID << endl;
     }
 }
+
+void View_CourseList(Semester s)
+{
+    // string CourseID, CourseName, ClassName, TeacherName, DayOfWeek;
+    // int NumberOfCredits, MaxNumberStudent, Session;
+    // COURSE01
+    // Mang may tinh
+    // MMT
+    // Hoang Dung
+    // Sunday
+    // 1
+    // 4
+    // 50
+
+    cout << "CourseID"
+         << "\t"
+         << "Course Name"
+         << "\t"
+         << "Class Name"
+         << "\t"
+         << "Teacher Name"
+         << "\t"
+         << "Day Of The Week"
+         << "      "
+         << "Number Of Credits"
+         << "      "
+         << "Maximum number of Students"
+         << "      "
+         << "Session" << endl;
+    for (int i = 0; i < s.n; i++)
+    {
+        cout << s.CourseList[i].CourseID << "\t" << s.CourseList[i].CourseName << "\t" << s.CourseList[i].ClassName << "\t"
+             << "\t" << s.CourseList[i].TeacherName << "\t" << s.CourseList[i].DayOfWeek << "\t"
+             << "\t"
+             << "\t" << s.CourseList[i].NumberOfCredits << "\t"
+             << "\t"
+             << "\t" << s.CourseList[i].MaxNumberStudent << "\t"
+             << "\t"
+             << "\t"
+             << "\t" << s.CourseList[i].Session << endl;
+    }
+}
