@@ -1,5 +1,6 @@
 #include "Func.h"
 
+//
 void TiepTuc(bool &tieptuc)
 {
     bool hihi = true;
