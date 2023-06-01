@@ -74,7 +74,7 @@ void Import_Account(string Account_File, User &user);
 int Login(User user, int &index);
 void View_Profile(User user, int role, int index);
 void Change_Password(User &user, int role, int index);
-void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3);
+void Create_SchoolYear(SchoolYear *&schoolyear, int &nSY, bool &tieptuc3);
 void Create_Classes(SchoolYear &sy);
 void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3);
 void View_StudentList(Class X);

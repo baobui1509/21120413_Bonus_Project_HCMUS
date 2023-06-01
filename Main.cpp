@@ -83,10 +83,10 @@ int main()
                             case 1:
                             {
                                 cout << "______Create a school year______" << endl;
-                                nSY++;
-                                schoolyear = new SchoolYear[nSY];
+                                // nSY++;
+                                // schoolyear = new SchoolYear[nSY];
                                 // Nho kiem tra nam hoc moi co trung lap khong?
-                                Create_SchoolYear(schoolyear[nSY - 1], tieptuc3);
+                                Create_SchoolYear(schoolyear, nSY, tieptuc3);
                                 if (!tieptuc3)
                                 {
                                     tieptuc1 = false;
@@ -94,7 +94,6 @@ int main()
                                     break;
                                 }
                                 haha1 = true;
-                                cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {

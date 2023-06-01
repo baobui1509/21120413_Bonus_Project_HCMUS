@@ -307,30 +307,125 @@ void Change_Password(User &user, int role, int index)
     cout << "Change Successfully!" << endl;
 }
 
-void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3)
+// void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3)
+// {
+//     cout << "Enter start year: ";
+//     cin >> schoolyear.StartYear;
+//     while (schoolyear.StartYear <= 0)
+//     {
+//         cout << "Please enter an integer number bigger than 0: ";
+//         cin >> schoolyear.StartYear;
+//     }
+//     schoolyear.EndYear = schoolyear.StartYear + 1;
+//     schoolyear.nSemester = 3;
+//     schoolyear.SemesterList = new Semester[schoolyear.nSemester];
+//     if (!schoolyear.SemesterList)
+//     {
+//         cout << "OVERFLOW!" << endl;
+//         tieptuc3 = false;
+//         return;
+//     }
+//     schoolyear.nClass = 0;
+//     schoolyear.ClassList = NULL;
+//     for (int i = 0; i < 3; i++)
+//     {
+//         schoolyear.SemesterList[i].Check = false;
+//     }
+// }
+
+void Create_SchoolYear(SchoolYear *&schoolyear, int &nSY, bool &tieptuc3)
 {
+    nSY++;
+    SchoolYear sy;
     cout << "Enter start year: ";
-    cin >> schoolyear.StartYear;
-    while (schoolyear.StartYear <= 0)
+    cin >> sy.StartYear;
+    while (sy.StartYear <= 0)
     {
         cout << "Please enter an integer number bigger than 0: ";
-        cin >> schoolyear.StartYear;
+        cin >> sy.StartYear;
     }
-    schoolyear.EndYear = schoolyear.StartYear + 1;
-    schoolyear.nSemester = 3;
-    schoolyear.SemesterList = new Semester[schoolyear.nSemester];
-    if (!schoolyear.SemesterList)
+    sy.EndYear = sy.StartYear + 1;
+    sy.nSemester = 3;
+    sy.SemesterList = new Semester[sy.nSemester];
+    if (!sy.SemesterList)
     {
         cout << "OVERFLOW!" << endl;
         tieptuc3 = false;
         return;
     }
-    schoolyear.nClass = 0;
-    schoolyear.ClassList = NULL;
+    sy.nClass = 0;
+    sy.ClassList = NULL;
     for (int i = 0; i < 3; i++)
     {
-        schoolyear.SemesterList[i].Check = false;
+        sy.SemesterList[i].Check = false;
     }
+    if (nSY == 1)
+    {
+        schoolyear[nSY - 1] = sy;
+    }
+    else
+    {
+        bool huhu = true;
+        while (huhu)
+        {
+            for (int i = 0; i < nSY - 1; i++)
+            {
+                if (schoolyear[i].StartYear == sy.StartYear)
+                {
+                    cout << "School year exists!" << endl
+                         << "Plase enter another Start Year: ";
+                    cin >> sy.StartYear;
+                    while (sy.StartYear <= 0)
+                    {
+                        cout << "Please enter an integer number bigger than 0: ";
+                        cin >> sy.StartYear;
+                    }
+
+                    break;
+                }
+                if (i == nSY - 2)
+                {
+                    sy.EndYear = sy.StartYear + 1;
+                    sy.nSemester = 3;
+                    sy.SemesterList = new Semester[sy.nSemester];
+                    if (!sy.SemesterList)
+                    {
+                        cout << "OVERFLOW!" << endl;
+                        tieptuc3 = false;
+                        return;
+                    }
+                    sy.nClass = 0;
+                    sy.ClassList = NULL;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        sy.SemesterList[i].Check = false;
+                    }
+                    huhu = false;
+                }
+            }
+        }
+        SchoolYear *temp = new SchoolYear[nSY];
+        if (!temp)
+        {
+            cout << "OVERFLOW" << endl;
+            tieptuc3 = false;
+            return;
+        }
+        for (int i = 0; i < nSY - 1; i++)
+        {
+            temp[i] = schoolyear[i];
+        }
+        temp[nSY - 1] = sy;
+
+        // delete[] schoolyear;
+        schoolyear = new SchoolYear[nSY];
+        for (int i = 0; i < nSY; i++)
+        {
+            schoolyear[i] = temp[i];
+        }
+        delete[] temp;
+    }
+    cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
 }
 
 // Chu y
