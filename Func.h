@@ -17,11 +17,25 @@ struct User
     Account *Student;
 };
 
-struct Mark
+struct CourseMark
 {
     int No;
     string StudentID, StudentFullName;
-    float TotalMark, FinalMark, MidtermMark, OtherMark;
+    float MidtermMark, FinalMark, TotalMark, OtherMark;
+};
+
+struct Mark // Chua diem cua 1 Class
+{
+    int No;
+    string StudentID, StudentFullName;
+    float FinalMark, GPA;
+};
+
+struct ClassMark
+{
+    Mark *Marks;
+    int n;
+    float OverallGPA;
 };
 
 struct Student
@@ -33,14 +47,15 @@ struct Student
     string Gender;
     string Birthday;
     string SocialID;
-    Mark MarkBoard;
+    // Mark MarkBoard;
 };
 
 struct Course
 {
     int n;
     Student *StudentList;
-    Mark *MarkBoard;
+    CourseMark *MarkBoard;
+    bool Export;
     string CourseID, CourseName, ClassName, TeacherName, DayOfWeek;
     int NumberOfCredits, MaxNumberStudent, Session;
 };
@@ -55,9 +70,9 @@ struct Semester
 struct Class
 {
     // bool Students_Added;
-    int nStudent, nMark;
+    int n;
     Student *StudentList;
-    Mark *MarkBoard;
+    ClassMark MarkBoard;
     string ClassName;
 };
 
@@ -74,15 +89,22 @@ void Import_Account(string Account_File, User &user);
 int Login(User user, int &index);
 void View_Profile(User user, int role, int index);
 void Change_Password(User &user, int role, int index);
-void Create_SchoolYear(SchoolYear *&schoolyear, int &nSY, bool &tieptuc3);
+// void Create_SchoolYear(SchoolYear *&schoolyear, int &nSY, bool &tieptuc3);
+void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3);
 void Create_Classes(SchoolYear &sy);
-void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3);
+void Add_Students_Class(SchoolYear &sy, int nClass, string FileName, bool &tieptuc3);
 void View_StudentList(Class X);
 void Enter_And_Check_ClassName(SchoolYear &schoolyear, int &xClass, bool &tieptuc3);
 void Create_Semester(SchoolYear *&sy, int nSY, int &iSY, int &iSemester);
 void Course_Input(Course &course);
-void Add_Course_To_Semester(Semester &semester, Course course);
+void Add_Course_To_Semester(SchoolYear *&schoolyear, int nSY, int iSemester, int n, Course course);
 void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3);
 void View_ClassList(SchoolYear *sy, int nSY);
 void View_StudentList_Course(SchoolYear *sy, int nSY);
 void View_CourseList(Semester s);
+void Update_Course_In4(Semester &s);
+void Add_A_Student_To_Course(Semester &s);
+void Remove_A_Student_From_Course(Semester &s);
+void Delete_A_Course(Semester &s);
+void Export_StudentList_Course(SchoolYear *sy, int nSY, string &FileName);
+void Import_CourseMark(SchoolYear *&sy, int nSY, string &FileName);

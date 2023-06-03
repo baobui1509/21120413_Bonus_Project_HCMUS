@@ -5,6 +5,10 @@ int main()
     User user;
     bool tieptuc1 = true;
     int choice1 = 0;
+    SchoolYear *schoolyear;
+    bool haha1 = false, haha2 = false, haha4 = false, haha5 = false, haha15 = false;
+    int iSY, iSemester;
+    int nSY = 0;
     while (tieptuc1)
     {
         cout << "______________________MENU_______________________" << endl
@@ -47,11 +51,7 @@ int main()
                     // Acadamic Staff Member
                     if (role == 1)
                     {
-                        SchoolYear *schoolyear;
-                        int iSY, iSemester;
-                        int nSY = 0;
                         bool tieptuc3 = true;
-                        bool haha1 = false, haha2 = false, haha4 = false, haha5 = false;
                         int choice3 = 0;
                         while (tieptuc3)
                         {
@@ -63,19 +63,19 @@ int main()
                                  << "6. Upload a CSV file, containing a list of students enrolled in the course" << endl
                                  << "7. View the list of courses" << endl
                                  << "8. Update course information" << endl
-                                 << "10. Add a student to the course" << endl
-                                 << "11. Remove a student from the course" << endl
-                                 << "12. Delete a course" << endl
-                                 << "13. View a list of classes" << endl
-                                 << "14. View a list of students in a class" << endl
-                                 << "15. View a list of students in a course" << endl
-                                 << "16. Export a list of students in a course to a CSV file" << endl
-                                 << "17. Import the scoreboard of a course"
-                                 << "18. View the scoreboard of a course"
-                                 << "19. Update a student's result" << endl
-                                 << "20. View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA" << endl
-                                 << "21. Turn back" << endl
-                                 << "22. Exit" << endl
+                                 << "9. Add a student to the course" << endl
+                                 << "10. Remove a student from the course" << endl
+                                 << "11. Delete a course" << endl
+                                 << "12. View a list of classes" << endl
+                                 << "13. View a list of students in a class" << endl
+                                 << "14. View a list of students in a course" << endl
+                                 << "15. Export a list of students in a course to a CSV file" << endl
+                                 << "16. Import the scoreboard of a course" << endl
+                                 << "17. View the scoreboard of a course" << endl
+                                 << "18. Update a student's result" << endl
+                                 << "19. View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA" << endl
+                                 << "20. Turn back" << endl
+                                 << "21. Exit" << endl
                                  << "Enter your choice: ";
                             cin >> choice3;
                             switch (choice3)
@@ -83,10 +83,10 @@ int main()
                             case 1:
                             {
                                 cout << "______Create a school year______" << endl;
-                                // nSY++;
-                                // schoolyear = new SchoolYear[nSY];
+                                nSY++;
+                                schoolyear = new SchoolYear[nSY];
                                 // Nho kiem tra nam hoc moi co trung lap khong?
-                                Create_SchoolYear(schoolyear, nSY, tieptuc3);
+                                Create_SchoolYear(schoolyear[nSY - 1], tieptuc3);
                                 if (!tieptuc3)
                                 {
                                     tieptuc1 = false;
@@ -116,9 +116,8 @@ int main()
                                     break;
                                 }
                                 cout << "______Create several classes for 1st-year students______" << endl;
-
-                                haha2 = true;
                                 Create_Classes(schoolyear[nSY - 1]);
+                                haha2 = true;
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {
@@ -146,14 +145,14 @@ int main()
                                 cout << "Enter input file name: ";
                                 cin.ignore();
                                 getline(cin, NameFile);
-                                Add_Students_Class(schoolyear[nSY - 1], NameFile, tieptuc3);
+                                int nClass = schoolyear[nSY - 1].nClass;
+                                Add_Students_Class(schoolyear[nSY - 1], nClass, NameFile, tieptuc3);
                                 if (!tieptuc3)
                                 {
                                     tieptuc2 = false;
                                     tieptuc1 = false;
                                     break;
                                 }
-                                cout << "Add Successfully!" << endl;
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {
@@ -207,7 +206,8 @@ int main()
                                 Course course;
                                 Course_Input(course);
                                 haha5 = true;
-                                Add_Course_To_Semester(schoolyear[nSY - 1].SemesterList[iSemester], course);
+                                int n = schoolyear[nSY - 1].SemesterList[iSemester].n;
+                                Add_Course_To_Semester(schoolyear, nSY, iSemester, n, course);
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {
@@ -218,7 +218,7 @@ int main()
                             }
                             case 6:
                             {
-                                if (!haha5)
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
                                 {
                                     cout << "YOU HAVE TO CREATE A COURSE FIRST!" << endl;
                                     TiepTuc(tieptuc3);
@@ -245,7 +245,7 @@ int main()
                             }
                             case 7:
                             {
-                                if (!haha5)
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
                                 {
                                     cout << "THERE HAS NO COURSE CREATED YET!" << endl;
                                     TiepTuc(tieptuc3);
@@ -266,7 +266,99 @@ int main()
                                 }
                                 break;
                             }
-                            case 13:
+                            case 8:
+                            {
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
+                                {
+                                    cout << "THERE HAS NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Update course information______" << endl;
+                                Update_Course_In4(schoolyear[nSY - 1].SemesterList[iSemester]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 9:
+                            {
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
+                                {
+                                    cout << "THERE HAS NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Add a student to the course______" << endl;
+                                Add_A_Student_To_Course(schoolyear[nSY - 1].SemesterList[iSemester]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 10:
+                            {
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
+                                {
+                                    cout << "THERE HAS NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Remove a student from the course______" << endl;
+                                Remove_A_Student_From_Course(schoolyear[nSY - 1].SemesterList[iSemester]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 11:
+                            {
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
+                                {
+                                    cout << "THERE HAS NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Delete a course______" << endl;
+                                Delete_A_Course(schoolyear[nSY - 1].SemesterList[iSemester]);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 12:
                             {
                                 if (!haha2)
                                 {
@@ -289,7 +381,7 @@ int main()
                                 }
                                 break;
                             }
-                            case 14:
+                            case 13:
                             {
                                 if (!haha2)
                                 {
@@ -329,9 +421,9 @@ int main()
                                 }
                                 break;
                             }
-                            case 15:
+                            case 14:
                             {
-                                if (!haha5)
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
                                 {
                                     cout << "THERE HAS BEEN NO COURSE CREATED YET!" << endl;
                                     TiepTuc(tieptuc3);
@@ -352,12 +444,72 @@ int main()
                                 }
                                 break;
                             }
-                            case 21:
+                            case 15:
+                            {
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
+                                {
+                                    cout << "THERE HAS BEEN NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Export a list of students in a course to a CSV file______" << endl;
+                                string FileName;
+                                Export_StudentList_Course(schoolyear, nSY, FileName);
+                                haha15 = true;
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 16:
+                            {
+                                if (!haha5 || schoolyear[nSY - 1].SemesterList[iSemester].n == 0)
+                                {
+                                    cout << "THERE HAS BEEN NO COURSE CREATED YET!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                if (!haha15)
+                                {
+                                    cout << "PLEASE EXPORT A LIST OF STUDENTS IN A COURSE TO A CSV FILE FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Import the scoreboard of a course______" << endl;
+                                string FileName;
+                                Import_CourseMark(schoolyear, nSY, FileName);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 20:
                             {
                                 tieptuc3 = false;
                                 break;
                             }
-                            case 22:
+                            case 21:
                             {
                                 cout << "______Exist______" << endl;
                                 tieptuc1 = tieptuc2 = tieptuc3 = false;

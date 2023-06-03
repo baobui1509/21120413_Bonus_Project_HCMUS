@@ -307,126 +307,128 @@ void Change_Password(User &user, int role, int index)
     cout << "Change Successfully!" << endl;
 }
 
-// void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3)
-// {
-//     cout << "Enter start year: ";
-//     cin >> schoolyear.StartYear;
-//     while (schoolyear.StartYear <= 0)
-//     {
-//         cout << "Please enter an integer number bigger than 0: ";
-//         cin >> schoolyear.StartYear;
-//     }
-//     schoolyear.EndYear = schoolyear.StartYear + 1;
-//     schoolyear.nSemester = 3;
-//     schoolyear.SemesterList = new Semester[schoolyear.nSemester];
-//     if (!schoolyear.SemesterList)
-//     {
-//         cout << "OVERFLOW!" << endl;
-//         tieptuc3 = false;
-//         return;
-//     }
-//     schoolyear.nClass = 0;
-//     schoolyear.ClassList = NULL;
-//     for (int i = 0; i < 3; i++)
-//     {
-//         schoolyear.SemesterList[i].Check = false;
-//     }
-// }
-
-void Create_SchoolYear(SchoolYear *&schoolyear, int &nSY, bool &tieptuc3)
+void Create_SchoolYear(SchoolYear &schoolyear, bool &tieptuc3)
 {
-    nSY++;
-    SchoolYear sy;
     cout << "Enter start year: ";
-    cin >> sy.StartYear;
-    while (sy.StartYear <= 0)
+    cin >> schoolyear.StartYear;
+    while (schoolyear.StartYear <= 0)
     {
         cout << "Please enter an integer number bigger than 0: ";
-        cin >> sy.StartYear;
+        cin >> schoolyear.StartYear;
     }
-    sy.EndYear = sy.StartYear + 1;
-    sy.nSemester = 3;
-    sy.SemesterList = new Semester[sy.nSemester];
-    if (!sy.SemesterList)
+    schoolyear.EndYear = schoolyear.StartYear + 1;
+    schoolyear.nSemester = 3;
+    schoolyear.SemesterList = new Semester[schoolyear.nSemester];
+    if (!schoolyear.SemesterList)
     {
         cout << "OVERFLOW!" << endl;
         tieptuc3 = false;
         return;
     }
-    sy.nClass = 0;
-    sy.ClassList = NULL;
+    schoolyear.nClass = 0;
+    schoolyear.ClassList = NULL;
     for (int i = 0; i < 3; i++)
     {
-        sy.SemesterList[i].Check = false;
+        schoolyear.SemesterList[i].Check = false;
     }
-    if (nSY == 1)
-    {
-        schoolyear[nSY - 1] = sy;
-    }
-    else
-    {
-        bool huhu = true;
-        while (huhu)
-        {
-            for (int i = 0; i < nSY - 1; i++)
-            {
-                if (schoolyear[i].StartYear == sy.StartYear)
-                {
-                    cout << "School year exists!" << endl
-                         << "Plase enter another Start Year: ";
-                    cin >> sy.StartYear;
-                    while (sy.StartYear <= 0)
-                    {
-                        cout << "Please enter an integer number bigger than 0: ";
-                        cin >> sy.StartYear;
-                    }
-
-                    break;
-                }
-                if (i == nSY - 2)
-                {
-                    sy.EndYear = sy.StartYear + 1;
-                    sy.nSemester = 3;
-                    sy.SemesterList = new Semester[sy.nSemester];
-                    if (!sy.SemesterList)
-                    {
-                        cout << "OVERFLOW!" << endl;
-                        tieptuc3 = false;
-                        return;
-                    }
-                    sy.nClass = 0;
-                    sy.ClassList = NULL;
-                    for (int i = 0; i < 3; i++)
-                    {
-                        sy.SemesterList[i].Check = false;
-                    }
-                    huhu = false;
-                }
-            }
-        }
-        SchoolYear *temp = new SchoolYear[nSY];
-        if (!temp)
-        {
-            cout << "OVERFLOW" << endl;
-            tieptuc3 = false;
-            return;
-        }
-        for (int i = 0; i < nSY - 1; i++)
-        {
-            temp[i] = schoolyear[i];
-        }
-        temp[nSY - 1] = sy;
-
-        // delete[] schoolyear;
-        schoolyear = new SchoolYear[nSY];
-        for (int i = 0; i < nSY; i++)
-        {
-            schoolyear[i] = temp[i];
-        }
-        delete[] temp;
-    }
-    cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
+    cout << "School Year " << schoolyear.StartYear << "-" << schoolyear.EndYear << " has been created!" << endl;
 }
+
+// void Create_SchoolYear(SchoolYear *&schoolyear, int &nSY, bool &tieptuc3)
+// {
+//     nSY++;
+//     SchoolYear sy;
+//     cout << "Enter start year: ";
+//     cin >> sy.StartYear;
+//     while (sy.StartYear <= 0)
+//     {
+//         cout << "Please enter an integer number bigger than 0: ";
+//         cin >> sy.StartYear;
+//     }
+//     sy.EndYear = sy.StartYear + 1;
+//     sy.nSemester = 3;
+//     sy.SemesterList = new Semester[sy.nSemester];
+//     if (!sy.SemesterList)
+//     {
+//         cout << "OVERFLOW!" << endl;
+//         tieptuc3 = false;
+//         return;
+//     }
+//     sy.nClass = 0;
+//     sy.ClassList = NULL;
+//     for (int i = 0; i < 3; i++)
+//     {
+//         sy.SemesterList[i].Check = false;
+//     }
+//     // Neu day la nam hoc dau tien duoc tao
+//     if (nSY == 1)
+//     {
+//         schoolyear[nSY - 1] = sy;
+//     }
+//     else
+//     {
+//         bool huhu = true;
+//         while (huhu)
+//         {
+//             for (int i = 0; i < nSY - 1; i++)
+//             {
+//                 if (schoolyear[i].StartYear == sy.StartYear)
+//                 {
+//                     cout << "School year exists!" << endl
+//                          << "Plase enter another Start Year: ";
+//                     cin >> sy.StartYear;
+//                     while (sy.StartYear <= 0)
+//                     {
+//                         cout << "Please enter an integer number bigger than 0: ";
+//                         cin >> sy.StartYear;
+//                     }
+
+//                     break;
+//                 }
+//                 if (i == nSY - 2)
+//                 {
+//                     sy.EndYear = sy.StartYear + 1;
+//                     sy.nSemester = 3;
+//                     sy.SemesterList = new Semester[sy.nSemester];
+//                     if (!sy.SemesterList)
+//                     {
+//                         cout << "OVERFLOW!" << endl;
+//                         tieptuc3 = false;
+//                         return;
+//                     }
+//                     sy.nClass = 0;
+//                     sy.ClassList = NULL;
+//                     for (int i = 0; i < 3; i++)
+//                     {
+//                         sy.SemesterList[i].Check = false;
+//                     }
+//                     huhu = false;
+//                 }
+//             }
+//         }
+//         SchoolYear *temp = new SchoolYear[nSY];
+//         if (!temp)
+//         {
+//             cout << "OVERFLOW" << endl;
+//             tieptuc3 = false;
+//             return;
+//         }
+//         for (int i = 0; i < nSY - 1; i++)
+//         {
+//             temp[i] = schoolyear[i];
+//         }
+//         temp[nSY - 1] = sy;
+
+//         // delete[] schoolyear;
+//         schoolyear = new SchoolYear[nSY];
+//         for (int i = 0; i < nSY; i++)
+//         {
+//             schoolyear[i] = temp[i];
+//         }
+//         delete[] temp;
+//     }
+//     cout << "School Year " << schoolyear[nSY - 1].StartYear << "-" << schoolyear[nSY - 1].EndYear << " has been created!" << endl;
+// }
 
 // Chu y
 void Create_Classes(SchoolYear &sy)
@@ -471,10 +473,9 @@ void Create_Classes(SchoolYear &sy)
                 }
             }
 
-            sy.ClassList[i].nStudent = 0;
-            sy.ClassList[i].nMark = 0;
+            sy.ClassList[i].n = 0;
             sy.ClassList[i].StudentList = NULL;
-            sy.ClassList[i].MarkBoard = NULL;
+            sy.ClassList[i].MarkBoard.Marks = NULL;
         }
     }
     else
@@ -511,10 +512,9 @@ void Create_Classes(SchoolYear &sy)
                 }
             }
 
-            classlist[sy.nClass - m + i].nStudent = 0;
-            classlist[sy.nClass - m + i].nMark = 0;
+            classlist[sy.nClass - m + i].n = 0;
             classlist[sy.nClass - m + i].StudentList = NULL;
-            classlist[sy.nClass - m + i].MarkBoard = NULL;
+            classlist[sy.nClass - m + i].MarkBoard.Marks = NULL;
         }
         delete[] sy.ClassList;
         sy.ClassList = new Class[sy.nClass];
@@ -526,7 +526,7 @@ void Create_Classes(SchoolYear &sy)
     }
 }
 
-void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3)
+void Add_Students_Class(SchoolYear &sy, int nClass, string FileName, bool &tieptuc3)
 {
     ifstream fin(FileName);
     if (!fin.is_open())
@@ -534,17 +534,19 @@ void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3)
         cout << "Can not open file (" << FileName << ")" << endl;
         return;
     }
-
+    sy.nClass = nClass;
     string classname;
     int xClass;
     bool check1 = false;
     bool huhu = true;
+    // Kiem tra ten Class co ton tai hay khong
     while (huhu)
     {
         cout << "Enter the name of class to which you want to add students: ";
         getline(cin, classname);
         for (int i = 0; i < sy.nClass; i++)
         {
+            // cout << "i: " << i << endl;
             if (sy.ClassList[i].ClassName == classname)
             {
                 check1 = true;
@@ -580,7 +582,7 @@ void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3)
         nStudent++;
     }
     nStudent--;
-    sy.ClassList[xClass].nStudent = nStudent;
+    sy.ClassList[xClass].n = nStudent;
     fin.close();
     sy.ClassList[xClass].StudentList = new Student[nStudent];
     ifstream finn(FileName);
@@ -595,44 +597,36 @@ void Add_Students_Class(SchoolYear &sy, string FileName, bool &tieptuc3)
             // No
             int x = line.find(',');
             sy.ClassList[xClass].StudentList[index].No = stoi(line.substr(0, x));
-            // cout << "No: " << stoi(line.substr(0, x)) << endl;
             string left = line.substr(x + 2, line.length() - x - 2);
             // Student ID
             x = left.find(',');
             sy.ClassList[xClass].StudentList[index].StudentID = left.substr(0, x);
-            // cout << "StudentID: " << left.substr(0, x) << endl;
             left = left.substr(x + 2, left.length() - x - 2);
             // First name
             x = left.find(',');
             sy.ClassList[xClass].StudentList[index].FirstName = left.substr(0, x);
-            // cout << "FirstName: " << left.substr(0, x) << endl;
             left = left.substr(x + 2, left.length() - x - 2);
             // Last name
             x = left.find(',');
             sy.ClassList[xClass].StudentList[index].LastName = left.substr(0, x);
-            // cout << "LastName: " << left.substr(0, x) << endl;
             left = left.substr(x + 2, left.length() - x - 2);
             // Gender
             x = left.find(',');
             sy.ClassList[xClass].StudentList[index].Gender = left.substr(0, x);
-            // cout << "Gender: " << left.substr(0, x) << endl;
             left = left.substr(x + 2, left.length() - x - 2);
             // Birthday
             x = left.find(',');
             sy.ClassList[xClass].StudentList[index].Birthday = left.substr(0, x);
-            // cout << "Birthday: " << left.substr(0, x) << endl;
             left = left.substr(x + 2, left.length() - x - 2);
             // SocialID
             x = left.find(',');
             sy.ClassList[xClass].StudentList[index].SocialID = left.substr(0, x);
-            // cout << "SocialID: " << left.substr(0, x) << endl;
             left = left.substr(x + 2, left.length() - x - 2);
         }
         index++;
     }
     finn.close();
-    // sy.ClassList[xClass].Students_Added = true;
-    // View_StudentList(sy.ClassList[xClass]);
+    cout << "Add Successfully!" << endl;
 }
 
 void View_StudentList(Class X)
@@ -657,7 +651,7 @@ void View_StudentList(Class X)
          << "\t"
          << "\t"
          << "Social ID" << endl;
-    for (int i = 0; i < X.nStudent; i++)
+    for (int i = 0; i < X.n; i++)
     {
         cout << X.StudentList[i].No << "\t"
              << "\t" << X.StudentList[i].StudentID << "\t"
@@ -834,43 +828,50 @@ void Course_Input(Course &course)
     course.n = 0;
     course.StudentList = NULL;
     course.MarkBoard = NULL;
+    course.Export = false;
 }
 
-void Add_Course_To_Semester(Semester &semester, Course course)
+void Add_Course_To_Semester(SchoolYear *&schoolyear, int nSY, int iSemester, int n, Course course)
 {
-    // Neu semester chua co course nao
-    if (semester.n == 0 && !semester.CourseList)
+    if (n == 0)
     {
-        semester.n++;
-        semester.CourseList = new Course[semester.n];
-        semester.CourseList[semester.n - 1] = course;
+        schoolyear[nSY - 1].SemesterList[iSemester].CourseList = NULL;
+    }
+    schoolyear[nSY - 1].SemesterList[iSemester].n = n;
+
+    // Neu semester chua co course nao
+    if (schoolyear[nSY - 1].SemesterList[iSemester].n == 0 && !schoolyear[nSY - 1].SemesterList[iSemester].CourseList)
+    {
+        schoolyear[nSY - 1].SemesterList[iSemester].n++;
+        schoolyear[nSY - 1].SemesterList[iSemester].CourseList = new Course[schoolyear[nSY - 1].SemesterList[iSemester].n];
+        schoolyear[nSY - 1].SemesterList[iSemester].CourseList[schoolyear[nSY - 1].SemesterList[iSemester].n - 1] = course;
         cout << "Add Successfully!" << endl;
     }
-    // semester da co course
+    // schoolyear[nSY-1].SemesterList[iSemester] da co course
     else
     {
         // Kiem tra courseID co ton tai chua
-        for (int i = 0; i < semester.n; i++)
+        for (int i = 0; i < schoolyear[nSY - 1].SemesterList[iSemester].n; i++)
         {
-            if (semester.CourseList[i].CourseID == course.CourseID)
+            if (schoolyear[nSY - 1].SemesterList[iSemester].CourseList[i].CourseID == course.CourseID)
             {
                 cout << "Course ID already exists!" << endl;
                 return;
             }
         }
         // Neu CourseID chua ton tai thi them vao CourseList
-        semester.n++;
-        Course *temp = new Course[semester.n];
-        for (int i = 0; i < semester.n - 1; i++)
+        schoolyear[nSY - 1].SemesterList[iSemester].n++;
+        Course *temp = new Course[schoolyear[nSY - 1].SemesterList[iSemester].n];
+        for (int i = 0; i < schoolyear[nSY - 1].SemesterList[iSemester].n - 1; i++)
         {
-            temp[i] = semester.CourseList[i];
+            temp[i] = schoolyear[nSY - 1].SemesterList[iSemester].CourseList[i];
         }
-        temp[semester.n - 1] = course;
-        delete[] semester.CourseList;
-        semester.CourseList = new Course[semester.n];
-        for (int i = 0; i < semester.n; i++)
+        temp[schoolyear[nSY - 1].SemesterList[iSemester].n - 1] = course;
+        delete[] schoolyear[nSY - 1].SemesterList[iSemester].CourseList;
+        schoolyear[nSY - 1].SemesterList[iSemester].CourseList = new Course[schoolyear[nSY - 1].SemesterList[iSemester].n];
+        for (int i = 0; i < schoolyear[nSY - 1].SemesterList[iSemester].n; i++)
         {
-            semester.CourseList[i] = temp[i];
+            schoolyear[nSY - 1].SemesterList[iSemester].CourseList[i] = temp[i];
         }
         cout << "Add Successfully!" << endl;
     }
@@ -935,8 +936,8 @@ void Add_Students_To_Course(Semester &s, string FileName, bool &tieptuc3)
     }
     fin.close();
     n--;
-    s.n = n;
-    s.CourseList[xCourse].StudentList = new Student[s.n];
+    s.CourseList[xCourse].n = n;
+    s.CourseList[xCourse].StudentList = new Student[n];
     if (!s.CourseList[xCourse].StudentList)
     {
         cout << "OVERFLOW!" << endl;
@@ -1044,8 +1045,21 @@ void View_StudentList_Course(SchoolYear *sy, int nSY)
         cout << "Please enter a number in [1, " << k << "]: ";
         cin >> iSemester;
     }
-    iSemester--;
-    int h = 1;
+    k = 0;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            k++;
+            if (k == iSemester)
+            {
+                iSemester = i;
+                break;
+            }
+        }
+    }
+    // iSemester--;
+    int h = 0;
     cout << "Which CourseID?" << endl;
     for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].n; i++)
     {
@@ -1059,6 +1073,12 @@ void View_StudentList_Course(SchoolYear *sy, int nSY)
     {
         cout << "Please enter a number in [1, " << h << "]: ";
         cin >> iCourse;
+    }
+    iCourse--;
+    if (sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n == 0)
+    {
+        cout << "THERE ARE NOT ANY STUDENTS IN THIS COURSE" << endl;
+        return;
     }
     cout << "No"
          << "\t"
@@ -1079,13 +1099,17 @@ void View_StudentList_Course(SchoolYear *sy, int nSY)
          << "\t"
          << "\t"
          << "Social ID" << endl;
+    // cout << "n:" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n << endl;
     for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n; i++)
     {
         cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].No << "\t"
              << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].StudentID << "\t"
              << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].FirstName << "\t"
+             << "\t"
              << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].LastName << "\t"
-             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Gender << "\t"
+             << "\t"
+             << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Gender
+             << "\t"
              << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Birthday << "\t"
              << "\t" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].SocialID << endl;
     }
@@ -1131,4 +1155,391 @@ void View_CourseList(Semester s)
              << "\t"
              << "\t" << s.CourseList[i].Session << endl;
     }
+}
+
+void Update_Course_In4(Semester &s)
+{
+    cout << "Which Course ID?" << endl;
+    for (int i = 0; i < s.n; i++)
+    {
+        cout << i + 1 << ". " << s.CourseList[i].CourseID << endl;
+    }
+    cout << "Choose course ID: ";
+    int iCourse;
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > s.n)
+    {
+        cout << "Please enter a number in [1, " << s.n << "]: ";
+        cin >> iCourse;
+    }
+    cin.ignore();
+    cout << "Enter new information: " << endl;
+    cout << "Course ID: ";
+    getline(cin, s.CourseList[iCourse].CourseID);
+    cout << "Course Name: ";
+    getline(cin, s.CourseList[iCourse].CourseName);
+    cout << "Class Name: ";
+    getline(cin, s.CourseList[iCourse].ClassName);
+    cout << "Teacher Name: ";
+    getline(cin, s.CourseList[iCourse].TeacherName);
+    cout << "Day of the week: ";
+    getline(cin, s.CourseList[iCourse].DayOfWeek);
+    cout << "Number of credits: ";
+    cin >> s.CourseList[iCourse].NumberOfCredits;
+    cout << "Maximun number of students: ";
+    cin >> s.CourseList[iCourse].MaxNumberStudent;
+    cout << "Session: ";
+    cin >> s.CourseList[iCourse].Session;
+    cout << "Update Successfully!" << endl;
+}
+
+void Add_A_Student_To_Course(Semester &s)
+{
+    // Chon khoa hoc de them sinh vien
+    cout << "Which course?" << endl;
+    for (int i = 0; i < s.n; i++)
+    {
+        cout << i + 1 << ". " << s.CourseList[i].CourseID << endl;
+    }
+    cout << "Choose course ID: ";
+    int iCourse;
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > s.n)
+    {
+        cout << "Please enter a number in [1, " << s.n << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+    // Nhap thong tin sinh vien can them
+    // int No;
+    // string StudentID;
+    // string FirstName;
+    // string LastName;
+    // string Gender;
+    // string Birthday;
+    // string SocialID;
+    Student student;
+    cin.ignore();
+    cout << "Enter information of student: " << endl;
+    student.No = s.CourseList[iCourse].n + 1;
+    cout << "Student ID: ";
+    getline(cin, student.StudentID);
+    cout << "First Name: ";
+    getline(cin, student.FirstName);
+    cout << "Last Name: ";
+    getline(cin, student.LastName);
+    cout << "Gender: ";
+    getline(cin, student.Gender);
+    cout << "Birthday: ";
+    getline(cin, student.Birthday);
+    cout << "Social ID: ";
+    getline(cin, student.SocialID);
+
+    s.CourseList[iCourse].n++;
+    Student *StudentList = new Student[s.CourseList[iCourse].n];
+    StudentList[s.CourseList[iCourse].n - 1] = student;
+    for (int i = 0; i < s.CourseList[iCourse].n - 1; i++)
+    {
+        StudentList[i] = s.CourseList[iCourse].StudentList[i];
+    }
+
+    s.CourseList[iCourse].StudentList = new Student[s.CourseList[iCourse].n];
+    for (int i = 0; i < s.CourseList[iCourse].n; i++)
+    {
+        s.CourseList[iCourse].StudentList[i] = StudentList[i];
+    }
+    delete[] StudentList;
+    cout << "Add Successfully!" << endl;
+}
+
+void Remove_A_Student_From_Course(Semester &s)
+{
+    cout << "Which course?" << endl;
+    for (int i = 0; i < s.n; i++)
+    {
+        cout << i + 1 << ". " << s.CourseList[i].CourseID << endl;
+    }
+    cout << "Choose course ID: ";
+    int iCourse;
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > s.n)
+    {
+        cout << "Please enter a number in [1, " << s.n << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+
+    cout << "Enter Student ID: ";
+    string studentID;
+    cin.ignore();
+    getline(cin, studentID);
+    int iStudent;
+    for (int i = 0; i < s.CourseList[iCourse].n; i++)
+    {
+        if (s.CourseList[iCourse].StudentList[i].StudentID == studentID)
+        {
+            iStudent = i;
+            break;
+        }
+        if (i == s.CourseList[iCourse].n - 1)
+        {
+            cout << "StudentID does not exist!" << endl;
+            return;
+        }
+    }
+    for (int i = iStudent; i < s.CourseList[iCourse].n - 1; i++)
+    {
+        s.CourseList[iCourse].StudentList[i] = s.CourseList[iCourse].StudentList[i + 1];
+    }
+    s.CourseList[iCourse].n--;
+    cout << "Remove Successfully!" << endl;
+}
+
+void Delete_A_Course(Semester &s)
+{
+    cout << "Which course?" << endl;
+    for (int i = 0; i < s.n; i++)
+    {
+        cout << i + 1 << ". " << s.CourseList[i].CourseID << endl;
+    }
+    cout << "Choose course ID: ";
+    int iCourse;
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > s.n)
+    {
+        cout << "Please enter a number in [1, " << s.n << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+    for (int i = iCourse; i < s.n - 1; i++)
+    {
+        s.CourseList[i] = s.CourseList[i + 1];
+    }
+    s.n--;
+    cout << "Delete SUccessfully!" << endl;
+}
+
+void Export_StudentList_Course(SchoolYear *sy, int nSY, string &FileName)
+{
+    // Nhap course muon export
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    cout << "Which Semester?" << endl;
+    int k = 1;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            cout << k << ". Semester " << i + 1 << endl;
+            k++;
+        }
+    }
+    cout << "Choose semester: ";
+    int iSemester;
+    cin >> iSemester;
+    while (iSemester <= 0 || iSemester > k)
+    {
+        cout << "Please enter a number in [1, " << k << "]: ";
+        cin >> iSemester;
+    }
+    k = 0;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            k++;
+            if (k == iSemester)
+            {
+                iSemester = i;
+                break;
+            }
+        }
+    }
+    int h = 0;
+    cout << "Which CourseID?" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].n; i++)
+    {
+        h++;
+        cout << i + 1 << ". " << sy[choice - 1].SemesterList[iSemester].CourseList[i].CourseID << endl;
+    }
+    int iCourse;
+    cout << "Choose CourseID: ";
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > h)
+    {
+        cout << "Please enter a number in [1, " << h << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+    if (sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n == 0)
+    {
+        cout << "THERE ARE NOT ANY STUDENTS IN THIS COURSE" << endl;
+        return;
+    }
+
+    // Export
+    cout << "Enter name of file to which you want to export: ";
+    cin.ignore();
+    getline(cin, FileName);
+    ofstream fout(FileName);
+    if (!fout.is_open())
+    {
+        cout << "Can not open file " << FileName << "!" << endl;
+        return;
+    }
+
+    fout << "No, Student ID, First Name, Last Name, Gender, Date of Birth, Social ID"
+         << "\n";
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n; i++)
+    {
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].No << ", ";
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].StudentID << ", ";
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].FirstName << ", ";
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].LastName << ", ";
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Gender << ", ";
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].Birthday << ", ";
+        fout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].StudentList[i].SocialID;
+        if (i != sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n - 1)
+        {
+            fout << "\n";
+        }
+    }
+    fout.close();
+    sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].Export = true;
+    cout << "Export Successfully!" << endl;
+}
+
+void Import_CourseMark(SchoolYear *&sy, int nSY, string &FileName)
+{
+    // Nhap course muon import diem
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    cout << "Which Semester?" << endl;
+    int k = 1;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            cout << k << ". Semester " << i + 1 << endl;
+            k++;
+        }
+    }
+    cout << "Choose semester: ";
+    int iSemester;
+    cin >> iSemester;
+    while (iSemester <= 0 || iSemester > k)
+    {
+        cout << "Please enter a number in [1, " << k << "]: ";
+        cin >> iSemester;
+    }
+    k = 0;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            k++;
+            if (k == iSemester)
+            {
+                iSemester = i;
+                break;
+            }
+        }
+    }
+    int h = 0;
+    cout << "Which CourseID?" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].n; i++)
+    {
+        h++;
+        cout << i + 1 << ". " << sy[choice - 1].SemesterList[iSemester].CourseList[i].CourseID << endl;
+    }
+    int iCourse;
+    cout << "Choose CourseID: ";
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > h)
+    {
+        cout << "Please enter a number in [1, " << h << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+
+    // Ney ASM chua export StudentList
+    if (sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].Export != true)
+    {
+        cout << "Please export a list of students in a course to a CSV file FIRST!" << endl;
+        return;
+    }
+
+    cout << "Enter name of file from which you want to import: ";
+    cin.ignore();
+    getline(cin, FileName);
+    ifstream fin(FileName);
+    if (!fin.is_open())
+    {
+        cout << "Can not open file " << FileName << "!" << endl;
+        return;
+    }
+    string line = "";
+    string left = "";
+    int i = -1;
+    sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard = new CourseMark[sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n];
+    while (getline(fin, line))
+    {
+        cout << line << endl;
+        if (i != -1)
+        {
+            // No, StudentID, StudentFullName, MidtermMark, FinalMark, TotalMark, OtherMark
+            //  1, 00000001, Bao Bui, 10, 10, 20, 10
+            // No
+            int x = line.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].No = stoi(line.substr(0, x));
+            left = line.substr(x + 2, line.length() - x - 2);
+            // StudentID
+            x = left.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].StudentID = left.substr(0, x);
+            left = left.substr(x + 2, left.length() - x - 2);
+            // StudentFullName
+            x = left.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].StudentFullName = left.substr(0, x);
+            left = left.substr(x + 2, left.length() - x - 2);
+            // MidtermMark
+            x = left.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].MidtermMark = stoi(left.substr(0, x));
+            left = left.substr(x + 2, left.length() - x - 2);
+            // FinalMark
+            x = left.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].FinalMark = stoi(left.substr(0, x));
+            left = left.substr(x + 2, left.length() - x - 2);
+            // TotalMark
+            x = left.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].TotalMark = stoi(left.substr(0, x));
+            left = left.substr(x + 2, left.length() - x - 2);
+            // OtherMark
+            x = left.find(',');
+            sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].OtherMark = stoi(left.substr(0, x));
+            left = left.substr(x + 2, left.length() - x - 2);
+        }
+        i++;
+    }
+    fin.close();
+    cout << "Import Seccessfully!" << endl;
 }
