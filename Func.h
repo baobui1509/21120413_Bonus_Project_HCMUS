@@ -28,7 +28,9 @@ struct Mark // Chua diem cua 1 Class
 {
     int No;
     string StudentID, StudentFullName;
-    float FinalMark, GPA;
+    int nFinalMark;
+    float *FinalMark;
+    float GPA;
 };
 
 struct ClassMark
@@ -108,3 +110,7 @@ void Remove_A_Student_From_Course(Semester &s);
 void Delete_A_Course(Semester &s);
 void Export_StudentList_Course(SchoolYear *sy, int nSY, string &FileName);
 void Import_CourseMark(SchoolYear *&sy, int nSY, string &FileName);
+void View_ScoreBoard_Course(SchoolYear *sy, int nSY);
+void Update_Student_Result(SchoolYear *sy, int nSY);
+void Get_ClassMark(Semester semester, Class &_class);
+void View_ClassMark(SchoolYear *sy, int nSY);

@@ -6,7 +6,7 @@ int main()
     bool tieptuc1 = true;
     int choice1 = 0;
     SchoolYear *schoolyear;
-    bool haha1 = false, haha2 = false, haha4 = false, haha5 = false, haha15 = false;
+    bool haha1 = false, haha2 = false, haha3 = false, haha4 = false, haha5 = false, haha15 = false, haha16 = false;
     int iSY, iSemester;
     int nSY = 0;
     while (tieptuc1)
@@ -73,7 +73,7 @@ int main()
                                  << "16. Import the scoreboard of a course" << endl
                                  << "17. View the scoreboard of a course" << endl
                                  << "18. Update a student's result" << endl
-                                 << "19. View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA" << endl
+                                 << "19. View the scoreboard of a class" << endl
                                  << "20. Turn back" << endl
                                  << "21. Exit" << endl
                                  << "Enter your choice: ";
@@ -147,6 +147,7 @@ int main()
                                 getline(cin, NameFile);
                                 int nClass = schoolyear[nSY - 1].nClass;
                                 Add_Students_Class(schoolyear[nSY - 1], nClass, NameFile, tieptuc3);
+                                haha3 = true;
                                 if (!tieptuc3)
                                 {
                                     tieptuc2 = false;
@@ -496,6 +497,98 @@ int main()
                                 cout << "______Import the scoreboard of a course______" << endl;
                                 string FileName;
                                 Import_CourseMark(schoolyear, nSY, FileName);
+                                haha16 = true;
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 17:
+                            {
+                                if (!haha16)
+                                {
+                                    cout << "PLEASE IMPORT THE SCOREBOARD FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______View the scoreboard of a course______" << endl;
+                                View_ScoreBoard_Course(schoolyear, nSY);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 18:
+                            {
+                                if (!haha16)
+                                {
+                                    cout << "PLEASE IMPORT THE SCOREBOARD FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______Update a student's result______" << endl;
+                                Update_Student_Result(schoolyear, nSY);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 19:
+                            {
+                                if (!haha2)
+                                {
+                                    cout << "PLEASE CREATE CLASSES FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                if (!haha3)
+                                {
+                                    cout << "PLEASE ADD STUDENTS TO CLASSES FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                if (!haha16)
+                                {
+                                    cout << "PLEASE IMPORT THE SCOREBOARD FIRST!" << endl;
+                                    TiepTuc(tieptuc3);
+                                    if (!tieptuc3)
+                                    {
+                                        tieptuc2 = false;
+                                        tieptuc1 = false;
+                                    }
+                                    break;
+                                }
+                                cout << "______View the scoreboard of a class______" << endl;
+                                View_ClassMark(schoolyear, nSY);
                                 TiepTuc(tieptuc3);
                                 if (!tieptuc3)
                                 {

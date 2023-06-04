@@ -1543,3 +1543,364 @@ void Import_CourseMark(SchoolYear *&sy, int nSY, string &FileName)
     fin.close();
     cout << "Import Seccessfully!" << endl;
 }
+
+void View_ScoreBoard_Course(SchoolYear *sy, int nSY)
+{
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    cout << "Which Semester?" << endl;
+    int k = 1;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            cout << k << ". Semester " << i + 1 << endl;
+            k++;
+        }
+    }
+    cout << "Choose semester: ";
+    int iSemester;
+    cin >> iSemester;
+    while (iSemester <= 0 || iSemester > k)
+    {
+        cout << "Please enter a number in [1, " << k << "]: ";
+        cin >> iSemester;
+    }
+    k = 0;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            k++;
+            if (k == iSemester)
+            {
+                iSemester = i;
+                break;
+            }
+        }
+    }
+    int h = 0;
+    cout << "Which CourseID?" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].n; i++)
+    {
+        h++;
+        cout << i + 1 << ". " << sy[choice - 1].SemesterList[iSemester].CourseList[i].CourseID << endl;
+    }
+    int iCourse;
+    cout << "Choose CourseID: ";
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > h)
+    {
+        cout << "Please enter a number in [1, " << h << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+
+    // Neu course nay chua co bang diem
+    if (!sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard)
+    {
+        cout << "This course has not imported scoreboard yet!" << endl;
+        return;
+    }
+
+    // int No;
+    // string StudentID, StudentFullName;
+    // float MidtermMark, FinalMark, TotalMark, OtherMark;
+
+    cout << "No"
+         << "\t"
+         << "Student ID"
+         << "\t"
+         << "Student Full Name"
+         << "\t"
+         << "Midterm Mark"
+         << "\t"
+         << "Final Mark"
+         << "\t"
+         << "Total Mark"
+         << "\t"
+         << "Other Mark" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n; i++)
+    {
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].No << "\t";
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].StudentID << "\t";
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].StudentFullName << "\t"
+             << "\t";
+        if (i == 0)
+        {
+            cout << "\t";
+        }
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].MidtermMark << "\t"
+             << "\t";
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].FinalMark << "\t"
+             << "\t";
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].TotalMark << "\t"
+             << "\t";
+        cout << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].OtherMark << endl;
+    }
+}
+
+void Update_Student_Result(SchoolYear *sy, int nSY)
+{
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    cout << "Which Semester?" << endl;
+    int k = 1;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            cout << k << ". Semester " << i + 1 << endl;
+            k++;
+        }
+    }
+    cout << "Choose semester: ";
+    int iSemester;
+    cin >> iSemester;
+    while (iSemester <= 0 || iSemester > k)
+    {
+        cout << "Please enter a number in [1, " << k << "]: ";
+        cin >> iSemester;
+    }
+    k = 0;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            k++;
+            if (k == iSemester)
+            {
+                iSemester = i;
+                break;
+            }
+        }
+    }
+    int h = 0;
+    cout << "Which CourseID?" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].n; i++)
+    {
+        h++;
+        cout << i + 1 << ". " << sy[choice - 1].SemesterList[iSemester].CourseList[i].CourseID << endl;
+    }
+    int iCourse;
+    cout << "Choose CourseID: ";
+    cin >> iCourse;
+    while (iCourse <= 0 || iCourse > h)
+    {
+        cout << "Please enter a number in [1, " << h << "]: ";
+        cin >> iCourse;
+    }
+    iCourse--;
+
+    // Neu course nay chua co bang diem
+    if (!sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard)
+    {
+        cout << "This course has not imported scoreboard yet!" << endl;
+        return;
+    }
+
+    cout << "Which Student ID?" << endl;
+    for (int i = 0; i < sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n; i++)
+    {
+        cout << i + 1
+             << ". " << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].StudentID << " (" << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[i].StudentFullName << ")" << endl;
+    }
+    cout << "Choose Student ID: ";
+    int u;
+    cin >> u;
+    while (u <= 0 || u > sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n)
+    {
+        cout << "Please enter a number in [1, " << sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].n << "]: ";
+        cin >> u;
+    }
+    u--;
+    cout << "Enter new result:" << endl
+         << "Midterm Mark: ";
+    cin >> sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[u].MidtermMark;
+    cout << "Final Mark: ";
+    cin >> sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[u].FinalMark;
+    cout << "Total Mark: ";
+    cin >> sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[u].TotalMark;
+    cout << "Other Mark: ";
+    cin >> sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].MarkBoard[u].OtherMark;
+    cout << "Update Successfully!" << endl;
+}
+
+void Get_ClassMark(Semester semester, Class &_class)
+{
+    // Dem so luong Course ma moi Student tham gia de cap phat cho mang FinalMark
+    float *temp;
+    _class.MarkBoard.Marks = new Mark[_class.n];
+    int nCourse;
+    for (int i = 0; i < _class.n; i++) // Moi hoc sinh trong lop hoc
+    {
+        nCourse = 0;
+        for (int j = 0; j < semester.n; j++) // Moi Course trong Semester
+        {
+            for (int k = 0; k < semester.CourseList[j].n; k++) // Moi Student trong Course
+            {
+                if (_class.StudentList[i].StudentID == semester.CourseList[j].StudentList[k].StudentID)
+                {
+                    nCourse++;
+                    // Luu FinalMark vao mang temp
+                    if (nCourse == 1)
+                    {
+                        temp = new float[1];
+                        temp[0] = semester.CourseList[j].MarkBoard[k].FinalMark;
+                    }
+                    else
+                    {
+                        float *tempp = new float[nCourse];
+                        for (int q = 0; q < nCourse - 1; q++)
+                        {
+                            tempp[q] = temp[q];
+                        }
+                        tempp[nCourse - 1] = semester.CourseList[j].MarkBoard[k].FinalMark;
+                        temp = new float[nCourse];
+                        for (int q = 0; q < nCourse; q++)
+                        {
+                            temp[q] = tempp[q];
+                        }
+                        delete[] tempp;
+                    }
+                    break;
+                }
+            }
+        }
+        _class.MarkBoard.Marks[i].GPA = 0;
+        _class.MarkBoard.OverallGPA = 0;
+        _class.MarkBoard.Marks[i].nFinalMark = nCourse;
+        // FinalMark
+        _class.MarkBoard.Marks[i]
+            .FinalMark = new float[nCourse];
+        for (int q = 0; q < nCourse; q++)
+        {
+            _class.MarkBoard.Marks[i].FinalMark[q] = temp[q];
+            _class.MarkBoard.Marks[i].GPA += temp[q];
+        }
+        // GPA
+        _class.MarkBoard.Marks[i].GPA /= nCourse;
+        _class.MarkBoard.OverallGPA += _class.MarkBoard.Marks[i].GPA;
+        // Information
+        _class.MarkBoard.Marks[i]
+            .No = i + 1;
+        _class.MarkBoard.Marks[i].StudentID = _class.StudentList[i].StudentID;
+        _class.MarkBoard.Marks[i].StudentFullName = _class.StudentList[i].LastName + ' ' + _class.StudentList[i].FirstName;
+    }
+    _class.MarkBoard.OverallGPA /= _class.n;
+    delete[] temp;
+}
+
+void View_ClassMark(SchoolYear *sy, int nSY)
+{
+    // Chon Semester
+    cout << "Which school year?" << endl;
+    for (int i = 0; i < nSY; i++)
+    {
+        cout << i + 1 << ". " << sy[i].StartYear << "-" << sy[i].EndYear << endl;
+    }
+    cout << "Enter your choice: ";
+    int choice;
+    cin >> choice;
+    while (choice <= 0 || choice > nSY)
+    {
+        cout << "Please enter a number in [1, " << nSY << "]: ";
+    }
+    cout << "Which Semester?" << endl;
+    int k = 1;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            cout << k << ". Semester " << i + 1 << endl;
+            k++;
+        }
+    }
+    cout << "Choose semester: ";
+    int iSemester;
+    cin >> iSemester;
+    while (iSemester <= 0 || iSemester > k)
+    {
+        cout << "Please enter a number in [1, " << k << "]: ";
+        cin >> iSemester;
+    }
+    k = 0;
+    for (int i = 0; i < sy[choice - 1].nSemester; i++)
+    {
+        if (sy[choice - 1].SemesterList[i].Check)
+        {
+            k++;
+            if (k == iSemester)
+            {
+                iSemester = i;
+                break;
+            }
+        }
+    }
+    // Chon Class
+    cout << "Which Class?" << endl;
+    for (int i = 0; i < sy[choice - 1].nClass; i++)
+    {
+        cout << i + 1 << ". " << sy[choice - 1].ClassList[i].ClassName << endl;
+    }
+    cout << "Choose Class: ";
+    int iClass;
+    cin >> iClass;
+    while (iClass <= 0 || iClass > sy[choice - 1].nClass)
+    {
+        cout << "Please enter a number in [1, " << sy[choice - 1].nClass << "]: ";
+        cin >> iClass;
+    }
+    iClass--;
+    if (!sy[choice - 1].ClassList[iClass].MarkBoard.Marks) // Neu diem cua Class chua duoc cap nhat thi cap nhat cho no, neu da cap nhat roi thi thoi (tiet kiem bo nho)
+    {
+        Get_ClassMark(sy[choice - 1].SemesterList[iSemester], sy[choice - 1].ClassList[iClass]);
+    }
+    // In ra bang diem
+    cout << "No"
+         << "\t"
+         << "Student ID"
+         << "\t"
+         << "Full Name"
+         << "\t"
+         << "Final Marks"
+         << "\t"
+         << "GPA" << endl;
+    for (int i = 0; i < sy[choice - 1].ClassList[iClass].n; i++)
+    {
+        cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].No << "\t";
+        cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].StudentID << "\t";
+        cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].StudentFullName << "\t";
+        for (int j = 0; j < sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].nFinalMark; j++)
+        {
+            cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].FinalMark[j];
+            if (j != sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].nFinalMark - 1)
+            {
+                cout << ", ";
+            }
+        }
+        cout << "\t";
+        cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].GPA << endl;
+    }
+    cout << "Overall GPA: " << sy[choice - 1].ClassList[iClass].MarkBoard.OverallGPA << endl;
+}
