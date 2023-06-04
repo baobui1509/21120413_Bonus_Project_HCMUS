@@ -1752,6 +1752,7 @@ void Get_ClassMark(Semester semester, Class &_class)
     float *temp;
     _class.MarkBoard.Marks = new Mark[_class.n];
     int nCourse;
+    _class.MarkBoard.OverallGPA = 0;
     for (int i = 0; i < _class.n; i++) // Moi hoc sinh trong lop hoc
     {
         nCourse = 0;
@@ -1788,7 +1789,6 @@ void Get_ClassMark(Semester semester, Class &_class)
             }
         }
         _class.MarkBoard.Marks[i].GPA = 0;
-        _class.MarkBoard.OverallGPA = 0;
         _class.MarkBoard.Marks[i].nFinalMark = nCourse;
         // FinalMark
         _class.MarkBoard.Marks[i]
@@ -1807,6 +1807,8 @@ void Get_ClassMark(Semester semester, Class &_class)
         _class.MarkBoard.Marks[i].StudentID = _class.StudentList[i].StudentID;
         _class.MarkBoard.Marks[i].StudentFullName = _class.StudentList[i].LastName + ' ' + _class.StudentList[i].FirstName;
     }
+    // cout << "Overall: " << _class.MarkBoard.OverallGPA << endl
+    //      << "_class.n: " << _class.n << endl;
     _class.MarkBoard.OverallGPA /= _class.n;
     delete[] temp;
 }
@@ -1891,6 +1893,10 @@ void View_ClassMark(SchoolYear *sy, int nSY)
         cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].No << "\t";
         cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].StudentID << "\t";
         cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].StudentFullName << "\t";
+        if (i == 0)
+        {
+            cout << "\t";
+        }
         for (int j = 0; j < sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].nFinalMark; j++)
         {
             cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].FinalMark[j];
@@ -1899,7 +1905,8 @@ void View_ClassMark(SchoolYear *sy, int nSY)
                 cout << ", ";
             }
         }
-        cout << "\t";
+        cout << "\t"
+             << "\t";
         cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].GPA << endl;
     }
     cout << "Overall GPA: " << sy[choice - 1].ClassList[iClass].MarkBoard.OverallGPA << endl;
