@@ -45,11 +45,13 @@ void Import_Account(string Account_File, User &user)
     string line1 = "";
     string line2 = "";
     string line3 = "";
+    string name = "";
     string temp = "";
     Account account;
     int n1 = 0;
     int n2 = 0;
 
+    // Dem so luong moi loai user
     while (getline(fin, line))
     {
         int x = line.find(',');
@@ -78,14 +80,14 @@ void Import_Account(string Account_File, User &user)
         temp = line.substr(x + 2, line.length() - x - 2);
         int y = temp.find(',');
         line2 = temp.substr(0, y);
-        line3 = temp.substr(y + 2, temp.length() - y - 2);
-        // std::cout << "line: " << line << endl
-        //           << "line1: " << line1 << endl
-        //           << "temp: " << temp << endl
-        //           << "line2: " << line2 << endl
-        //           << "line3: " << line3 << endl;
+        temp = temp.substr(y + 2, temp.length() - y - 2);
+        int z = temp.find(',');
+        line3 = temp.substr(0, z);
+        name = temp.substr(z + 2, temp.length() - z - 2);
+
         account.UserName = line2;
         account.Password = line3;
+        account.Name = name;
         if (line1 == "Acadamic Staff Member")
         {
             bool check = true;
@@ -103,8 +105,6 @@ void Import_Account(string Account_File, User &user)
             {
                 n1++;
                 user.Acadamic_Staff_Member[n1 - 1] = account;
-                // std::cout << "UserName: " << user.Acadamic_Staff_Member[n1 - 1].UserName << endl
-                //           << "Password: " << user.Acadamic_Staff_Member[n1 - 1].Password << endl;
             }
         }
         else if (line1 == "Student")
@@ -123,8 +123,6 @@ void Import_Account(string Account_File, User &user)
             {
                 n2++;
                 user.Student[n2 - 1] = account;
-                // std::cout << "UserName: " << user.Student[n2 - 1].UserName << endl
-                //           << "Password: " << user.Student[n2 - 1].Password << endl;
             }
         }
     }
@@ -243,13 +241,15 @@ void View_Profile(User user, int role, int index)
     {
         cout << "Role: Acadamic Staff Member" << endl
              << "UserName: " << user.Acadamic_Staff_Member[index].UserName << endl
-             << "Password: " << user.Acadamic_Staff_Member[index].Password << endl;
+             << "Password: " << user.Acadamic_Staff_Member[index].Password << endl
+             << "Name: " << user.Acadamic_Staff_Member[index].Name << endl;
     }
     else if (role == 2)
     {
         cout << "Role: Student" << endl
              << "UserName: " << user.Student[index].UserName << endl
-             << "Password: " << user.Student[index].Password << endl;
+             << "Password: " << user.Student[index].Password << endl
+             << "Name: " << user.Student[index].Name << endl;
     }
 }
 
