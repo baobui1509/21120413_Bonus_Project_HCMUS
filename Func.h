@@ -57,6 +57,7 @@ struct Course
     int n;
     Student *StudentList;
     CourseMark *MarkBoard;
+    bool Publish;
     bool Export;
     string CourseID, CourseName, ClassName, TeacherName, DayOfWeek;
     int NumberOfCredits, MaxNumberStudent, Session;
@@ -114,3 +115,5 @@ void View_ScoreBoard_Course(SchoolYear *sy, int nSY);
 void Update_Student_Result(SchoolYear *sy, int nSY);
 void Get_ClassMark(Semester semester, Class &_class);
 void View_ClassMark(SchoolYear *sy, int nSY);
+void View_Student_CourseList(SchoolYear *sy, int nSY, int iSemester);
+void View_StudentMark(SchoolYear *sy, int nSY, int iSemester);

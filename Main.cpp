@@ -5,7 +5,7 @@ int main()
     User user;
     bool tieptuc1 = true;
     int choice1 = 0;
-    SchoolYear *schoolyear;
+    SchoolYear *schoolyear = NULL;
     bool haha1 = false, haha2 = false, haha3 = false, haha4 = false, haha5 = false, haha15 = false, haha16 = false;
     int iSY, iSemester;
     int nSY = 0;
@@ -619,6 +619,62 @@ int main()
                     // Student
                     else if (role == 2)
                     {
+                        int choice;
+                        bool tieptuc3 = true;
+                        while (tieptuc3)
+                        {
+                            cout << "1. View a list of your courses" << endl
+                                 << "2. View your scoreboard" << endl
+                                 << "3. Turn back" << endl
+                                 << "4. Exit" << endl
+                                 << "Enter your choice: ";
+                            cin >> choice;
+                            switch (choice)
+                            {
+                            case 1:
+                            {
+                                cout << "______View a list of your courses______" << endl;
+                                cin.ignore();
+                                View_Student_CourseList(schoolyear, nSY, iSemester);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 2:
+                            {
+                                cout << "______View your scoreboard______" << endl;
+                                cin.ignore();
+                                View_StudentMark(schoolyear, nSY, iSemester);
+                                TiepTuc(tieptuc3);
+                                if (!tieptuc3)
+                                {
+                                    tieptuc2 = false;
+                                    tieptuc1 = false;
+                                }
+                                break;
+                            }
+                            case 3:
+                            {
+                                tieptuc3 = false;
+                                break;
+                            }
+                            case 4:
+                            {
+                                cout << "______Exit______" << endl;
+                                tieptuc3 = tieptuc2 = tieptuc1 = false;
+                                break;
+                            }
+                            default:
+                            {
+                                cout << "Illegal choice!" << endl;
+                                break;
+                            }
+                            }
+                        }
                     }
                     break;
                 }

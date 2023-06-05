@@ -829,6 +829,7 @@ void Course_Input(Course &course)
     course.StudentList = NULL;
     course.MarkBoard = NULL;
     course.Export = false;
+    course.Publish = false;
 }
 
 void Add_Course_To_Semester(SchoolYear *&schoolyear, int nSY, int iSemester, int n, Course course)
@@ -1540,6 +1541,7 @@ void Import_CourseMark(SchoolYear *&sy, int nSY, string &FileName)
         }
         i++;
     }
+    sy[choice - 1].SemesterList[iSemester].CourseList[iCourse].Publish = true;
     fin.close();
     cout << "Import Seccessfully!" << endl;
 }
@@ -1910,4 +1912,151 @@ void View_ClassMark(SchoolYear *sy, int nSY)
         cout << sy[choice - 1].ClassList[iClass].MarkBoard.Marks[i].GPA << endl;
     }
     cout << "Overall GPA: " << sy[choice - 1].ClassList[iClass].MarkBoard.OverallGPA << endl;
+}
+
+void View_Student_CourseList(SchoolYear *sy, int nSY, int iSemester)
+{
+    if (!sy || nSY == 0)
+    {
+        cout << "THERE ARE NOT ANY SCHOOL YEARS CREATED!" << endl;
+        return;
+    }
+    if (!sy[nSY - 1].SemesterList)
+    {
+        cout << "THERE ARE NOT ANY SEMESTERS CREATED!" << endl;
+        return;
+    }
+    if (!sy[nSY - 1].SemesterList[iSemester].CourseList)
+    {
+        cout << "THERE ARE NOT ANY COURSES CREATED!" << endl;
+        return;
+    }
+    cout << "Enter your Student ID: ";
+    string studentID = "";
+    getline(cin, studentID);
+    bool check = false;
+    // string CourseID, CourseName, ClassName, TeacherName, DayOfWeek;
+    // int NumberOfCredits, MaxNumberStudent, Session;
+    for (int i = 0; i < sy[nSY - 1].SemesterList[iSemester].n; i++) // Moi Course
+    {
+        for (int j = 0; j < sy[nSY - 1].SemesterList[iSemester].CourseList[i].n; j++) // Moi Student
+        {
+            if (studentID == sy[nSY - 1].SemesterList[iSemester].CourseList[i].StudentList[j].StudentID)
+            {
+                check = true;
+                if (i == 0)
+                {
+                    cout << "CourseID"
+                         << "\t"
+                         << "Course Name"
+                         << "\t"
+                         << "Class Name"
+                         << "\t"
+                         << "Teacher Name"
+                         << "\t"
+                         << "Day Of The Week"
+                         << "      "
+                         << "Number Of Credits"
+                         << "      "
+                         << "Maximum number of Students"
+                         << "      "
+                         << "Session" << endl;
+                }
+                cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].CourseID << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].CourseName << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].ClassName << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].TeacherName << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].DayOfWeek << "\t"
+                     << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].NumberOfCredits << "\t"
+                     << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].MaxNumberStudent << "\t"
+                     << "\t"
+                     << "\t"
+                     << "\t" << sy[nSY - 1].SemesterList[iSemester].CourseList[i].Session << endl;
+                break;
+            }
+        }
+    }
+    if (!check)
+    {
+        cout << "YOU HAVE NOT ENROLLED ANY COURSES YET!" << endl;
+    }
+}
+
+void View_StudentMark(SchoolYear *sy, int nSY, int iSemester)
+{
+    if (!sy || nSY == 0)
+    {
+        cout << "THERE ARE NOT ANY SCHOOL YEARS CREATED!" << endl;
+        return;
+    }
+    if (!sy[nSY - 1].SemesterList)
+    {
+        cout << "THERE ARE NOT ANY SEMESTERS CREATED!" << endl;
+        return;
+    }
+    if (!sy[nSY - 1].SemesterList[iSemester].CourseList)
+    {
+        cout << "THERE ARE NOT ANY COURSES CREATED!" << endl;
+        return;
+    }
+
+    cout << "Enter your Student ID: ";
+    string studentID = "";
+    getline(cin, studentID);
+
+    bool check1 = false, check2 = false;
+
+    for (int i = 0; i < sy[nSY - 1].SemesterList[iSemester].n; i++) // Moi Course
+    {
+        if (sy[nSY - 1].SemesterList[iSemester].CourseList[i].Publish)
+        {
+            check1 = true;
+            for (int j = 0; j < sy[nSY - 1].SemesterList[iSemester].CourseList[i].n; j++) // Diem cua moi Student
+            {
+                if (studentID == sy[nSY - 1].SemesterList[iSemester].CourseList[i].MarkBoard[j].StudentID)
+                {
+                    if (i == 0)
+                    {
+                        check2 = true;
+                        cout << "Course ID"
+                             << "\t"
+                             << "Course Name"
+                             << "\t"
+                             << "Midterm Mark"
+                             << "\t"
+                             << "Final Mark"
+                             << "\t"
+                             << "Total Mark"
+                             << "\t"
+                             << "Other Mark" << endl;
+                    }
+                    cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].CourseID << "\t"
+                         << "\t";
+                    cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].CourseName << "\t"
+                         << "\t";
+                    cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].MarkBoard[j].MidtermMark << "\t"
+                         << "\t";
+                    cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].MarkBoard[j].FinalMark << "\t"
+                         << "\t";
+                    cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].MarkBoard[j].TotalMark << "\t"
+                         << "\t";
+                    cout << sy[nSY - 1].SemesterList[iSemester].CourseList[i].MarkBoard[j].OtherMark << endl;
+                    break;
+                }
+            }
+        }
+    }
+    if (!check1)
+    {
+        cout << "THERE ARE NOT ANY COURSE SCOREBOARDS PUBLISHED YET!" << endl;
+    }
+    else
+    {
+        if (!check2)
+        {
+            cout << "YOU HAVE NOT ENROLLED ANY COURSES YET!" << endl;
+        }
+    }
 }
