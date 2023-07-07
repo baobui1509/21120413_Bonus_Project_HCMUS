@@ -4,6 +4,8 @@
 
 using namespace std;
 
+#pragma warning(disable : 4996)
+
 struct Account
 {
     string UserName;

@@ -124,7 +124,6 @@ int main()
                                     tieptuc1 = false;
                                     tieptuc2 = false;
                                 }
-                                cout << "Create Successfully!" << endl;
                                 break;
                             }
                             case 3:

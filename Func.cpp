@@ -285,15 +285,23 @@ void Change_Password(User &user, int role, int index)
         temp += user.Acadamic_Staff_Member[i].UserName;
         temp += ", ";
         temp += user.Acadamic_Staff_Member[i].Password;
-        temp += '\n';
+        temp += ", ";
+        temp += user.Acadamic_Staff_Member[i].Name;
+        if (i != user.n1 - 1)
+            temp += '\n';
     }
     for (int i = 0; i < user.n2; i++)
     {
+        if (i == 0)
+            temp += '\n';
         temp += "Student, ";
         temp += user.Student[i].UserName;
         temp += ", ";
         temp += user.Student[i].Password;
-        temp += '\n';
+        temp += ", ";
+        temp += user.Student[i].Name;
+        if (i != user.n2 - 1)
+            temp += '\n';
     }
     // cout << temp;
     ofstream fout("Account.csv");
@@ -524,6 +532,7 @@ void Create_Classes(SchoolYear &sy)
         }
         delete[] classlist;
     }
+    cout << "Create Successfully!" << endl;
 }
 
 void Add_Students_Class(SchoolYear &sy, int nClass, string FileName, bool &tieptuc3)
@@ -656,7 +665,9 @@ void View_StudentList(Class X)
         cout << X.StudentList[i].No << "\t"
              << "\t" << X.StudentList[i].StudentID << "\t"
              << "\t" << X.StudentList[i].FirstName << "\t"
+             << "\t"
              << "\t" << X.StudentList[i].LastName << "\t"
+             << "\t"
              << "\t" << X.StudentList[i].Gender << "\t"
              << "\t" << X.StudentList[i].Birthday << "\t"
              << "\t" << X.StudentList[i].SocialID << endl;
@@ -1146,8 +1157,11 @@ void View_CourseList(Semester s)
          << "Session" << endl;
     for (int i = 0; i < s.n; i++)
     {
-        cout << s.CourseList[i].CourseID << "\t" << s.CourseList[i].CourseName << "\t" << s.CourseList[i].ClassName << "\t"
-             << "\t" << s.CourseList[i].TeacherName << "\t" << s.CourseList[i].DayOfWeek << "\t"
+        cout << s.CourseList[i].CourseID << "\t"
+             << "\t" << s.CourseList[i].CourseName << "\t"
+             << "\t" << s.CourseList[i].ClassName << "\t"
+             << "\t" << s.CourseList[i].TeacherName << "\t"
+             << "\t" << s.CourseList[i].DayOfWeek << "\t"
              << "\t"
              << "\t" << s.CourseList[i].NumberOfCredits << "\t"
              << "\t"
@@ -1173,10 +1187,11 @@ void Update_Course_In4(Semester &s)
         cout << "Please enter a number in [1, " << s.n << "]: ";
         cin >> iCourse;
     }
+    iCourse--;
     cin.ignore();
     cout << "Enter new information: " << endl;
     cout << "Course ID: ";
-    getline(cin, s.CourseList[iCourse].CourseID);
+    getline(cin, s.CourseList[iCourse].CourseID); // Chua kiem tra xem Course ID co trung hay khong
     cout << "Course Name: ";
     getline(cin, s.CourseList[iCourse].CourseName);
     cout << "Class Name: ";
@@ -1211,14 +1226,6 @@ void Add_A_Student_To_Course(Semester &s)
         cin >> iCourse;
     }
     iCourse--;
-    // Nhap thong tin sinh vien can them
-    // int No;
-    // string StudentID;
-    // string FirstName;
-    // string LastName;
-    // string Gender;
-    // string Birthday;
-    // string SocialID;
     Student student;
     cin.ignore();
     cout << "Enter information of student: " << endl;
@@ -1269,7 +1276,11 @@ void Remove_A_Student_From_Course(Semester &s)
         cin >> iCourse;
     }
     iCourse--;
-
+    if (!s.CourseList[iCourse].StudentList)
+    {
+        cout << "THERE ARE NOT ANY STUDENTS IN THIS COURSE" << endl;
+        return;
+    }
     cout << "Enter Student ID: ";
     string studentID;
     cin.ignore();
@@ -1751,7 +1762,7 @@ void Update_Student_Result(SchoolYear *sy, int nSY)
 void Get_ClassMark(Semester semester, Class &_class)
 {
     // Dem so luong Course ma moi Student tham gia de cap phat cho mang FinalMark
-    float *temp;
+    float *temp = new float;
     _class.MarkBoard.Marks = new Mark[_class.n];
     int nCourse;
     _class.MarkBoard.OverallGPA = 0;
