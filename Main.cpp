@@ -200,6 +200,7 @@ int main()
                                         tieptuc1 = false;
                                     }
                                     break;
+                                    
                                 }
                                 cout << "______Add a course to this semester (A course will be taught in only one session in a week)______" << endl;
                                 cin.ignore();
